@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wardrobe Advisor - Погода и рекомендации</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>👗 Wardrobe Advisor</h1>
+            <p>Погода и рекомендации по одежде</p>
+        </header>
+
+        <main class="main-content">
+            <form method="POST" class="weather-form">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        name="city" 
+                        placeholder="Введите город" 
+                        value="{{ city }}" 
+                        autocomplete="on"
+                        required>
+                    <button type="submit" class="btn-primary">Узнать погоду</button>
+                </div>
+            </form>
+
+            {% if weather_data %}
+            <div class="weather-result" id="weatherResult">
+                {% if weather_data.error %}
+                <div class="error-message">
+                    <p>{{ weather_data.error }}</p>
+                </div>
+                {% else %}
+                <div class="weather-card">
+                    <div class="weather-main">
+                        <div class="weather-info">
+                            <h2>{{ weather_data.city }}</h2>
+                            <div class="temp">{{ weather_data.temperature }}°C</div>
+                            <p>{{ weather_data.description }}</p>
+                        </div>
+                        <img 
+                            src="https://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" 
+                            alt="{{ weather_data.description }}" 
+                            class="weather-icon">
+                    </div>
+                    
+                    <div class="weather-details">
+                        <div class="detail">
+                            <span class="label">Ощущается как:</span>
+                            <span class="value">{{ weather_data.feels_like }}°C</span>
+                        </div>
+                        <div class="detail">
+                            <span class="label">Влажность:</span>
+                            <span class="value">{{ weather_data.humidity }}%</span>
+                        </div>
+                        <div class="detail">
+                            <span class="label">Ветер:</span>
+                            <span class="value">{{ weather_data.wind_speed }} м/с</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3>Совет по одежде</h3>
+                    <div class="recommendation-content">
+                        <p>{{ recommendation }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </main>
+
+        <footer class="footer">
+            <p>© 2026 Wardrobe Advisor. Все рекомендации носят информационный характер.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
