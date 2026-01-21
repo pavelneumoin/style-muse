@@ -110,5 +110,15 @@ def index():
                          recommendation=recommendation, 
                          city=city)
 
+@app.route('/wardrobe')
+def wardrobe():
+    # Пример вещей (список словарей)
+    items = [
+        {"name": "Теплая куртка", "category": "Верхняя одежда", "warmth": "Высокая", "waterproof": False},
+        {"name": "Зонт", "category": "Аксессуар", "warmth": "Нет", "waterproof": True},
+        {"name": "Лёгкая футболка", "category": "Верх", "warmth": "Низкая", "waterproof": False},
+    ]
+    return render_template('wardrobe.html', items=items)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,59 @@
+/* Сетка гардероба */
+.wardrobe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0 2rem;
+}
+
+/* Карточка вещи */
+.clothing-card {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+}
+
+.clothing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 10, 50, 0.3);
+}
+
+.item-name {
+    font-weight: 600;
+    margin: 0.5rem 0;
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.item-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.category, .warmth, .waterproof {
+    display: block;
+    margin: 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.back-button {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .wardrobe-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .clothing-card {
+        margin: 0.5rem;
+    }
+}
