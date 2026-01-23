@@ -1,48 +1,123 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой гардероб - Wardrobe Advisor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Мой гардероб - Style Muse ✨</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/wardrobe.css') }}">
 </head>
+
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">👗</span>
+                <h1>Style Muse</h1>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Главная</a></li>
+                <li><a href="/wardrobe" class="nav-link active">Мой гардероб</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <header class="header">
-            <h1>👗 Wardrobe Advisor</h1>
-            <p>Мой гардероб</p>
+            <h1>Мой гардероб</h1>
+            <p>Твоя коллекция стильных вещей ✨</p>
         </header>
 
         <main class="main-content">
-            <div class="page-header">
-                <h1>Мой гардероб</h1>
+            <div class="wardrobe-actions">
+                <a href="/add_item" class="btn btn-primary">✨ Добавить вещь</a>
+            </div>
+
+            {% if items %}
+            <div class="wardrobe-filters">
+                <div class="filter-group">
+                    <span>Категория:</span>
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="Верх">👚 Верх</button>
+                    <button class="filter-btn" data-filter="Низ">👖 Низ</button>
+                    <button class="filter-btn" data-filter="Платья">👗 Платья</button>
+                    <button class="filter-btn" data-filter="Обувь">👠 Обувь</button>
+                    <button class="filter-btn" data-filter="Верхняя одежда">🧥 Верхняя</button>
+                </div>
+                <div class="filter-group">
+                    <span>Сезон:</span>
+                    <button class="filter-btn" data-filter="весна">🌸 Весна</button>
+                    <button class="filter-btn" data-filter="лето">☀️ Лето</button>
+                    <button class="filter-btn" data-filter="осень">🍂 Осень</button>
+                    <button class="filter-btn" data-filter="зима">❄️ Зима</button>
+                    <button class="filter-btn" data-filter="межсезонье">🌧 Межсезонье</button>
+                </div>
             </div>
 
             <div class="wardrobe-grid">
                 {% for item in items %}
-                <div class="clothing-card">
+                <div class="clothing-card" data-category="{{ item.category }}"
+                    data-seasons="{{ item.seasons|join(' ') }}">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            {% if item.category == 'Верх' %}👚
+                            {% elif item.category == 'Низ' %}👖
+                            {% elif item.category == 'Платья' %}👗
+                            {% elif item.category == 'Обувь' %}👠
+                            {% elif item.category == 'Верхняя одежда' %}🧥
+                            {% elif item.category == 'Головной убор' %}🎀
+                            {% elif item.category == 'Аксессуар' %}💍
+                            {% else %}👕
+                            {% endif %}
+                        </div>
+
+                        <span class="item-category">{{ item.category }}</span>
+                    </div>
+
                     <h3 class="item-name">{{ item.name }}</h3>
-                    <div class="item-info">
-                        <div class="category">Категория: {{ item.category }}</div>
-                        <div class="warmth">Теплозащита: {{ item.warmth }}</div>
+
+                    <div class="item-tags">
+                        <span class="tag warmth-{{ item.warmth|lower }}">{{ item.warmth }}</span>
                         {% if item.waterproof %}
-                        <div class="waterproof">Водоустойчивость: 🌂</div>
+                        <span class="tag tag-waterproof">☂️ Водоустойчивая</span>
                         {% endif %}
+
+                        {% for season in item.seasons %}
+                        <span class="tag tag-season">{{ season }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="/edit_item/{{ item.id }}" class="btn btn-edit">✏️ Изменить</a>
+                        <form action="/delete_item/{{ item.id }}" method="post" style="display: inline;"
+                            onsubmit="return confirm('Удалить вещь {{ item.name }}?')">
+                            <button type="submit" class="btn btn-delete">🗑️</button>
+                        </form>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">👗</div>
+                <h3>Гардероб пуст</h3>
+                <p>Добавь свою первую стильную вещь!</p>
+                <a href="/add_item" class="btn btn-primary">✨ Добавить вещь</a>
+            </div>
+            {% endif %}
 
             <div class="back-button">
                 <a href="/" class="btn">← Назад на главную</a>
             </div>
         </main>
-
-        <footer class="footer">
-            <p>© 2026 Wardrobe Advisor. Все права защищены.</p>
-        </footer>
     </div>
+
+    <footer>
+        <p>✨ Style Muse — твой персональный стилист © 2026</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/wardrobe.js') }}" defer></script>
 </body>
+
 </html>

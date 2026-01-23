@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать - Style Muse ✨</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">👗</span>
+                <h1>Style Muse</h1>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Главная</a></li>
+                <li><a href="/wardrobe" class="nav-link">Мой гардероб</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header" style="padding-bottom: 0;">
+            <h1>Style Muse</h1>
+            <p>Редактировать вещь</p>
+        </header>
+
+        <main class="main-content">
+            <form method="POST" class="item-form">
+                <div class="form-card">
+                    <div class="form-field">
+                        <label for="name">Название *</label>
+                        <input type="text" id="name" name="name" value="{{ item.name }}" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="category">Категория *</label>
+                        <select id="category" name="category" required>
+                            <option value="">Выбери категорию</option>
+                            <option value="Верх" {% if item.category=='Верх' %}selected{% endif %}>👚 Верх (блузки,
+                                топы)</option>
+                            <option value="Низ" {% if item.category=='Низ' %}selected{% endif %}>👖 Низ (юбки, брюки)
+                            </option>
+                            <option value="Платья" {% if item.category=='Платья' %}selected{% endif %}>👗 Платья
+                            </option>
+                            <option value="Верхняя одежда" {% if item.category=='Верхняя одежда' %}selected{% endif %}>
+                                🧥 Верхняя одежда</option>
+                            <option value="Обувь" {% if item.category=='Обувь' %}selected{% endif %}>👠 Обувь</option>
+                            <option value="Головной убор" {% if item.category=='Головной убор' %}selected{% endif %}>🎀
+                                Головной убор</option>
+                            <option value="Аксессуар" {% if item.category=='Аксессуар' %}selected{% endif %}>💍
+                                Аксессуары</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Теплозащита *</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="warmth" value="Лёгкий" {% if item.warmth=='Лёгкий' %}checked{%
+                                    endif %} required>
+                                <span class="radio-custom"></span>
+                                <span>☀️ Лёгкий</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="warmth" value="Средний" {% if item.warmth=='Средний'
+                                    %}checked{% endif %}>
+                                <span class="radio-custom"></span>
+                                <span>🌤️ Средний</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="warmth" value="Тёплый" {% if item.warmth=='Тёплый' %}checked{%
+                                    endif %}>
+                                <span class="radio-custom"></span>
+                                <span>❄️ Тёплый</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="waterproof" {% if item.waterproof %}checked{% endif %}>
+                            <span class="checkbox-custom"></span>
+                            <span>☂️ Водоустойчивая</span>
+                        </label>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Сезонность</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="лето" {% if 'лето' in item.seasons %}checked{% endif %}>
+                                <span class="checkbox-custom"></span>
+                                <span>☀️ Лето</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="осень" {% if 'осень' in item.seasons %}checked{% endif %}>
+                                <span class="checkbox-custom"></span>
+                                <span>🍂 Осень</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="зима" {% if 'зима' in item.seasons %}checked{% endif %}>
+                                <span class="checkbox-custom"></span>
+                                <span>❄️ Зима</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="весна" {% if 'весна' in item.seasons %}checked{% endif %}>
+                                <span class="checkbox-custom"></span>
+                                <span>🌸 Весна</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="межсезонье" {% if 'межсезонье' in item.seasons %}checked{%
+                                    endif %}>
+                                <span class="checkbox-custom"></span>
+                                <span>🌧️ Межсезонье</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <a href="/wardrobe" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <p>✨ Style Muse — твой персональный стилист © 2026</p>
+    </footer>
+</body>
+
+</html>

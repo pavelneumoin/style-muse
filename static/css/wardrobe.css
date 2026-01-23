@@ -1,59 +1,270 @@
-/* Сетка гардероба */
-.wardrobe-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin: 1rem 0 2rem;
-}
+/* ✨ Wardrobe Styles - Style Muse */
 
-/* Карточка вещи */
-.clothing-card {
-    background-color: var(--bg-secondary);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    border: 1px solid var(--border-color);
-}
-
-.clothing-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 10, 50, 0.3);
-}
-
-.item-name {
-    font-weight: 600;
-    margin: 0.5rem 0;
-    color: var(--accent-blue);
-    font-size: 1.1rem;
+.wardrobe-actions {
     text-align: center;
+    margin-bottom: var(--spacing-lg);
 }
 
-.item-info {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+.wardrobe-filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.filter-group span {
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-right: var(--spacing-xs);
     font-size: 0.9rem;
 }
 
-.category, .warmth, .waterproof {
-    display: block;
-    margin: 0.5rem 0;
+.filter-btn {
+    padding: 8px 16px;
+    background: var(--bg-glass);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.85rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 107, 157, 0.1);
+    border-color: var(--accent-pink);
+    color: var(--accent-pink);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-lavender) 100%);
+    color: white;
+    border-color: transparent;
+}
+
+/* Grid */
+.wardrobe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+/* Clothing Card */
+.clothing-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.clothing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-pink) 0%, var(--accent-lavender) 100%);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.clothing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow), var(--shadow-soft);
+    border-color: var(--border-glow);
+}
+
+.clothing-card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
+}
+
+.item-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent-lavender);
+    background: rgba(177, 156, 217, 0.15);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+}
+
+.item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--spacing-md);
+}
+
+.tag {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.tag.warmth-тёплый,
+.tag.warmth-теплый {
+    background: rgba(255, 127, 127, 0.15);
+    color: var(--accent-coral);
+    border-color: var(--accent-coral);
+}
+
+.tag.warmth-средний {
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+}
+
+.tag.warmth-легкий,
+.tag.warmth-лёгкий {
+    background: rgba(152, 216, 200, 0.15);
+    color: var(--accent-mint);
+    border-color: var(--accent-mint);
+}
+
+.tag-waterproof {
+    background: rgba(100, 149, 237, 0.15);
+    color: #87CEEB;
+    border-color: #87CEEB;
+}
+
+.tag-season {
+    background: rgba(255, 107, 157, 0.1);
+    color: var(--accent-pink-light);
+    border-color: rgba(255, 107, 157, 0.3);
+}
+
+.card-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.btn-edit {
+    flex: 1;
+    padding: 10px 16px;
+    background: var(--bg-glass);
+    color: var(--accent-lavender);
+    border: 1px solid var(--accent-lavender);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.btn-edit:hover {
+    background: linear-gradient(135deg, var(--accent-lavender) 0%, var(--accent-pink) 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.btn-delete {
+    padding: 10px 14px;
+    background: rgba(255, 127, 127, 0.1);
+    color: var(--accent-coral);
+    border: 1px solid var(--accent-coral);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+}
+
+.btn-delete:hover {
+    background: var(--accent-coral);
+    color: white;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+.empty-state h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-pink);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
 }
 
 .back-button {
     text-align: center;
-    margin: 2rem 0;
+    margin-top: var(--spacing-lg);
 }
 
-/* Адаптивность */
+/* Responsive */
 @media (max-width: 768px) {
     .wardrobe-grid {
         grid-template-columns: 1fr;
     }
-    
-    .clothing-card {
-        margin: 0.5rem;
+
+    .filter-group {
+        justify-content: center;
+    }
+
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
     }
 }

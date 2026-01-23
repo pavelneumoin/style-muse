@@ -25,11 +25,3 @@ if (form) {
         }
     });
 }
-
-// Автофокус на поле ввода
-window.addEventListener('load', function() {
-    const cityInput = document.querySelector('input[name="city"]');
-    if (cityInput) {
-        cityInput.focus();
-    }
-});

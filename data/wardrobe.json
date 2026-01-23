@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "name": "шапка",
+    "category": "Головной убор",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "куртка",
+    "category": "Верхняя одежда",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "к",
+    "category": "Низ",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "осень"
+    ]
+  }
+]
