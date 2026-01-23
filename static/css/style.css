@@ -651,6 +651,120 @@ body::after {
     margin-bottom: var(--spacing-sm);
 }
 
+/* Outfit tooltip popup */
+.avatar-wrapper {
+    position: relative;
+}
+
+.avatar-hint {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.outfit-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgba(26, 26, 46, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: var(--spacing-sm);
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 100;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+}
+
+.avatar-wrapper:hover .outfit-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.tooltip-title {
+    font-weight: 700;
+    color: var(--accent-pink);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.tooltip-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.tooltip-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Health Tips Widget */
+.health-widget {
+    background: linear-gradient(145deg, rgba(152, 216, 200, 0.1), rgba(177, 156, 217, 0.08));
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 1px solid rgba(152, 216, 200, 0.3);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.health-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-mint) 0%, #7dd3c0 50%, var(--accent-lavender) 100%);
+}
+
+.health-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.health-icon {
+    font-size: 1.8rem;
+}
+
+.health-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-mint);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.health-content {
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.health-content br {
+    display: block;
+    margin-bottom: 8px;
+    content: '';
+}
+
 /* AI Recommendation Card */
 .ai-card {
     position: relative;

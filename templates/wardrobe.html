@@ -44,6 +44,8 @@
                     <button class="filter-btn" data-filter="Платья">👗 Платья</button>
                     <button class="filter-btn" data-filter="Обувь">👠 Обувь</button>
                     <button class="filter-btn" data-filter="Верхняя одежда">🧥 Верхняя</button>
+                    <button class="filter-btn" data-filter="Головной убор">🎀 Головные</button>
+                    <button class="filter-btn" data-filter="Аксессуар">💍 Аксессуары</button>
                 </div>
                 <div class="filter-group">
                     <span>Сезон:</span>
@@ -58,17 +60,58 @@
             <div class="wardrobe-grid">
                 {% for item in items %}
                 <div class="clothing-card" data-category="{{ item.category }}"
-                    data-seasons="{{ item.seasons|join(' ') }}">
+                    data-seasons="{{ item.seasons|join(' ') }}" style="--item-color: {{ item.color|default('#B19CD9') }}">
+                    
+                    <div class="card-color-indicator" style="background: {{ item.color|default('#B19CD9') }}"></div>
+                    
                     <div class="card-header">
                         <div class="card-icon">
-                            {% if item.category == 'Верх' %}👚
-                            {% elif item.category == 'Низ' %}👖
-                            {% elif item.category == 'Платья' %}👗
-                            {% elif item.category == 'Обувь' %}👠
-                            {% elif item.category == 'Верхняя одежда' %}🧥
-                            {% elif item.category == 'Головной убор' %}🎀
-                            {% elif item.category == 'Аксессуар' %}💍
-                            {% else %}👕
+                            {% if item.category == 'Верх' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 8C28 8 24 10 22 14L12 20V28L18 26V52H46V26L52 28V20L42 14C40 10 36 8 32 8Z" fill="{{ item.color|default('#B19CD9') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M26 8C26 8 28 16 32 16C36 16 38 8 38 8" stroke="#333" stroke-width="2" fill="none"/>
+                            </svg>
+                            {% elif item.category == 'Низ' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 12H46L44 52H36L32 32L28 52H20L18 12Z" fill="{{ item.color|default('#4169E1') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M18 12H46" stroke="#333" stroke-width="3"/>
+                            </svg>
+                            {% elif item.category == 'Платья' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 6C29 6 26 8 24 12L20 16L16 56H48L44 16L40 12C38 8 35 6 32 6Z" fill="{{ item.color|default('#FF69B4') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M26 6C26 6 28 12 32 12C36 12 38 6 38 6" stroke="#333" stroke-width="2" fill="none"/>
+                                <path d="M20 28H44" stroke="#333" stroke-width="1.5" stroke-dasharray="3 2"/>
+                            </svg>
+                            {% elif item.category == 'Обувь' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 32C12 32 14 24 22 24C30 24 32 28 32 28L52 32V44H12V32Z" fill="{{ item.color|default('#1A1A1A') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M12 44H52V48C52 50 50 52 48 52H16C14 52 12 50 12 48V44Z" fill="{{ item.color|default('#1A1A1A') }}" stroke="#333" stroke-width="2"/>
+                                <ellipse cx="22" cy="28" rx="4" ry="2" fill="#FFF" opacity="0.3"/>
+                            </svg>
+                            {% elif item.category == 'Верхняя одежда' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 4C28 4 24 6 22 10L8 18V30L14 28V58H50V28L56 30V18L42 10C40 6 36 4 32 4Z" fill="{{ item.color|default('#D2B48C') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M26 4C26 4 28 12 32 12C36 12 38 4 38 4" stroke="#333" stroke-width="2" fill="none"/>
+                                <circle cx="28" cy="32" r="2" fill="#333"/>
+                                <circle cx="28" cy="42" r="2" fill="#333"/>
+                                <circle cx="28" cy="52" r="2" fill="#333"/>
+                            </svg>
+                            {% elif item.category == 'Головной убор' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <ellipse cx="32" cy="40" rx="24" ry="8" fill="{{ item.color|default('#D2B48C') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M16 40C16 40 18 20 32 20C46 20 48 40 48 40" fill="{{ item.color|default('#D2B48C') }}" stroke="#333" stroke-width="2"/>
+                                <path d="M24 40C24 38 28 36 32 36C36 36 40 38 40 40" stroke="#333" stroke-width="1.5" fill="none"/>
+                            </svg>
+                            {% elif item.category == 'Аксессуар' %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="32" cy="32" r="20" fill="none" stroke="{{ item.color|default('#FFD700') }}" stroke-width="4"/>
+                                <circle cx="32" cy="32" r="14" fill="none" stroke="{{ item.color|default('#FFD700') }}" stroke-width="2"/>
+                                <circle cx="32" cy="12" r="4" fill="{{ item.color|default('#FFD700') }}" stroke="#333" stroke-width="1"/>
+                            </svg>
+                            {% else %}
+                            <svg class="clothing-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 8C28 8 24 10 22 14L18 18V24H22V52H42V24H46V18L42 14C40 10 36 8 32 8Z" fill="{{ item.color|default('#B19CD9') }}" stroke="#333" stroke-width="2"/>
+                            </svg>
                             {% endif %}
                         </div>
 
@@ -76,6 +119,11 @@
                     </div>
 
                     <h3 class="item-name">{{ item.name }}</h3>
+
+                    <div class="item-color-info">
+                        <span class="color-swatch" style="background: {{ item.color|default('#B19CD9') }}"></span>
+                        <span class="color-name">{{ item.colorName|default('—') }}</span>
+                    </div>
 
                     <div class="item-tags">
                         <span class="tag warmth-{{ item.warmth|lower }}">{{ item.warmth }}</span>

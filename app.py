@@ -112,6 +112,76 @@ def get_fallback_recommendation(temperature, description):
     return base
 
 
+def get_health_tips(temperature, description, magnetic_level):
+    """Получаем советы по здоровью для детей от GigaChat"""
+    token = get_gigachat_token()
+    
+    if not token:
+        return get_fallback_health_tips(temperature, description, magnetic_level)
+    
+    try:
+        url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': f'Bearer {token}'
+        }
+        
+        prompt = f"""Ты детский врач-педиатр. Погода сейчас: {temperature}°C, {description}. Магнитная активность: {magnetic_level}.
+
+Дай 3 коротких полезных совета для детей по здоровью на сегодня с учетом погоды. Используй эмодзи. Будь дружелюбным и понятным для детей. Каждый совет — одно предложение."""
+
+        payload = {
+            "model": "GigaChat",
+            "messages": [
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": 0.7,
+            "max_tokens": 250
+        }
+        
+        response = requests.post(url, headers=headers, json=payload, verify=False, timeout=15)
+        
+        if response.status_code == 200:
+            result = response.json()
+            return result['choices'][0]['message']['content']
+    except Exception as e:
+        print(f"GigaChat health tips error: {e}")
+    
+    return get_fallback_health_tips(temperature, description, magnetic_level)
+
+
+def get_fallback_health_tips(temperature, description, magnetic_level):
+    """Советы по здоровью без AI"""
+    tips = []
+    desc_lower = description.lower()
+    
+    if temperature > 25:
+        tips.append("☀️ Пей больше воды — минимум 6-8 стаканов в день!")
+        tips.append("🧴 Наноси солнцезащитный крем перед прогулкой.")
+        tips.append("🕐 Гуляй утром или вечером, когда не так жарко.")
+    elif temperature >= 15:
+        tips.append("🚶 Отличная погода для прогулки! Проведи на улице час.")
+        tips.append("🍎 Ешь свежие фрукты и овощи для витаминов.")
+        tips.append("😴 Ложись спать вовремя — отдых важен!")
+    elif temperature >= 5:
+        tips.append("🧣 Надень шарф, чтобы не простудить горло.")
+        tips.append("🍵 Пей тёплый чай с мёдом для иммунитета.")
+        tips.append("🧤 Не забудь перчатки, если руки мёрзнут!")
+    else:
+        tips.append("❄️ Одевайся тепло — береги себя от холода!")
+        tips.append("🍊 Ешь витамин C — апельсины и лимоны.")
+        tips.append("🏠 После прогулки сразу переодевайся в сухое.")
+    
+    if 'дождь' in desc_lower:
+        tips[2] = "☔ Не гуляй под дождём — можно промокнуть и заболеть."
+    
+    if magnetic_level == 'high':
+        tips[0] = "💧 Пей много воды и отдыхай — сегодня магнитная буря."
+    
+    return "\n".join(tips)
+
+
 def get_magnetic_storms():
     """Получаем данные о геомагнитной обстановке"""
     try:
@@ -162,11 +232,89 @@ def get_weather_data(city):
         return {'error': 'Ошибка сети. Проверьте подключение к интернету'}
 
 
+def get_outfit_for_avatar(temperature, gender):
+    """Выбираем одежду из гардероба по температуре и полу"""
+    items = load_items()
+    
+    # Определяем сезон по температуре
+    if temperature > 25:
+        season = 'лето'
+        warmth_priority = ['Лёгкий', 'Средняя']
+    elif temperature >= 15:
+        season = 'весна'
+        warmth_priority = ['Лёгкий', 'Средняя']
+    elif temperature >= 5:
+        season = 'осень'
+        warmth_priority = ['Средняя', 'Тёплый']
+    else:
+        season = 'зима'
+        warmth_priority = ['Тёплый', 'Средняя']
+    
+    def filter_items(category, prefer_gender):
+        """Фильтруем вещи по категории, сезону и полу"""
+        matching = []
+        for item in items:
+            if item.get('category') != category:
+                continue
+            item_gender = item.get('gender', 'унисекс')
+            if item_gender not in [prefer_gender, 'унисекс']:
+                continue
+            if season not in item.get('seasons', []):
+                continue
+            matching.append(item)
+        
+        # Сортируем по приоритету теплоты
+        def warmth_score(item):
+            w = item.get('warmth', 'Средняя')
+            return warmth_priority.index(w) if w in warmth_priority else 10
+        
+        matching.sort(key=warmth_score)
+        return matching[0] if matching else None
+    
+    # Выбираем по категориям в зависимости от температуры
+    outfit = {}
+    
+    if temperature > 25:
+        # Лето - платье или топ + шорты
+        if gender == 'женский':
+            outfit['dress'] = filter_items('Платья', gender)
+            if not outfit['dress']:
+                outfit['top'] = filter_items('Верх', gender)
+                outfit['bottom'] = filter_items('Низ', gender)
+        else:
+            outfit['top'] = filter_items('Верх', gender)
+            outfit['bottom'] = filter_items('Низ', gender)
+    elif temperature >= 15:
+        # Весна - блузка/рубашка + джинсы
+        outfit['top'] = filter_items('Верх', gender)
+        outfit['bottom'] = filter_items('Низ', gender)
+    elif temperature >= 5:
+        # Осень - свитер/куртка + брюки
+        outfit['top'] = filter_items('Верх', gender)
+        outfit['bottom'] = filter_items('Низ', gender)
+        outfit['coat'] = filter_items('Верхняя одежда', gender)
+    else:
+        # Зима - пальто/пуховик + тёплые вещи
+        outfit['top'] = filter_items('Верх', gender)
+        outfit['bottom'] = filter_items('Низ', gender)
+        outfit['coat'] = filter_items('Верхняя одежда', gender)
+        outfit['hat'] = filter_items('Головной убор', gender)
+        outfit['accessory'] = filter_items('Аксессуар', gender)
+    
+    # Обувь всегда
+    outfit['shoes'] = filter_items('Обувь', gender)
+    
+    return {k: v for k, v in outfit.items() if v}  # Убираем None
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     weather_data = None
     ai_recommendation = None
+    health_tips = None
     city = 'Москва'
+    female_outfit = {}
+    male_outfit = {}
     
     if request.method == 'POST':
         city = request.form.get('city', 'Москва').strip()
@@ -179,7 +327,7 @@ def index():
     # Получаем данные о магнитных бурях
     magnetic_data = get_magnetic_storms()
     
-    # Получаем AI рекомендацию
+    # Получаем AI рекомендации и советы по здоровью
     if weather_data and 'error' not in weather_data:
         ai_recommendation = get_ai_recommendation(
             weather_data['temperature'],
@@ -187,14 +335,26 @@ def index():
             weather_data['humidity'],
             weather_data['wind_speed']
         )
+        # Подбираем одежду из гардероба для аватаров
+        female_outfit = get_outfit_for_avatar(weather_data['temperature'], 'женский')
+        male_outfit = get_outfit_for_avatar(weather_data['temperature'], 'мужской')
+        # Получаем советы по здоровью для детей
+        health_tips = get_health_tips(
+            weather_data['temperature'],
+            weather_data['description'],
+            magnetic_data['level']
+        )
 
     return render_template('index.html', 
                          weather_data=weather_data, 
                          ai_recommendation=ai_recommendation,
+                         health_tips=health_tips,
                          city=city,
                          magnetic_level=magnetic_data['level'],
                          magnetic_text=magnetic_data['text'],
-                         k_index=magnetic_data['k_index'])
+                         k_index=magnetic_data['k_index'],
+                         female_outfit=female_outfit,
+                         male_outfit=male_outfit)
 
 
 # ========== Wardrobe Functions ==========

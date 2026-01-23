@@ -110,6 +110,58 @@
     filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
 }
 
+/* Color indicator strip at top of card */
+.card-color-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* SVG Clothing Icons */
+.clothing-svg {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
+    transition: var(--transition);
+}
+
+.clothing-card:hover .clothing-svg {
+    transform: scale(1.1) rotate(-3deg);
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+}
+
+/* Color Info Display */
+.item-color-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: var(--spacing-sm);
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+}
+
+.color-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: capitalize;
+}
+
 .item-category {
     font-size: 0.75rem;
     font-weight: 700;

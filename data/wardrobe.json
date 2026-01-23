@@ -1,33 +1,852 @@
 [
   {
     "id": 1,
-    "name": "шапка",
-    "category": "Головной убор",
-    "warmth": "Средняя",
+    "name": "Белая блузка с рюшами",
+    "category": "Верх",
+    "color": "#FFFFFF",
+    "colorName": "Белый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
     "waterproof": false,
     "seasons": [
-      "межсезонье"
+      "лето",
+      "весна"
     ]
   },
   {
     "id": 2,
-    "name": "куртка",
-    "category": "Верхняя одежда",
+    "name": "Чёрная водолазка",
+    "category": "Верх",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "унисекс",
     "warmth": "Средняя",
     "waterproof": false,
     "seasons": [
+      "осень",
+      "зима",
       "межсезонье"
     ]
   },
   {
     "id": 3,
-    "name": "к",
-    "category": "Низ",
+    "name": "Розовый кашемировый свитер",
+    "category": "Верх",
+    "color": "#FFB6C1",
+    "colorName": "Розовый",
+    "gender": "женский",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Бежевый топ на бретелях",
+    "category": "Верх",
+    "color": "#F5DEB3",
+    "colorName": "Бежевый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Джинсовая рубашка",
+    "category": "Верх",
+    "color": "#6CA0DC",
+    "colorName": "Голубой",
+    "gender": "унисекс",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "лето",
+      "осень"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Изумрудный кроп-топ",
+    "category": "Верх",
+    "color": "#50C878",
+    "colorName": "Изумрудный",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Синяя футболка поло",
+    "category": "Верх",
+    "color": "#4169E1",
+    "colorName": "Синий",
+    "gender": "мужской",
     "warmth": "Лёгкий",
     "waterproof": false,
     "seasons": [
       "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Белая классическая рубашка",
+    "category": "Верх",
+    "color": "#FAFAFA",
+    "colorName": "Белый",
+    "gender": "мужской",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна",
       "осень"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Серый шерстяной пуловер",
+    "category": "Верх",
+    "color": "#696969",
+    "colorName": "Серый",
+    "gender": "мужской",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Бордовый свитшот",
+    "category": "Верх",
+    "color": "#722F37",
+    "colorName": "Бордовый",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "осень",
+      "весна"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Синие классические джинсы",
+    "category": "Низ",
+    "color": "#4169E1",
+    "colorName": "Синий",
+    "gender": "унисекс",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "лето",
+      "осень",
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Чёрная юбка-карандаш",
+    "category": "Низ",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "женский",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень",
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Белые льняные брюки",
+    "category": "Низ",
+    "color": "#FFFAF0",
+    "colorName": "Белый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Бордовая юбка миди",
+    "category": "Низ",
+    "color": "#722F37",
+    "colorName": "Бордовый",
+    "gender": "женский",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "осень",
+      "весна"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Тёмно-зелёные брюки чинос",
+    "category": "Низ",
+    "color": "#355E3B",
+    "colorName": "Тёмно-зелёный",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень",
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Бежевые шорты",
+    "category": "Низ",
+    "color": "#D2B48C",
+    "colorName": "Бежевый",
+    "gender": "мужской",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Синие спортивные брюки",
+    "category": "Низ",
+    "color": "#2C3E50",
+    "colorName": "Тёмно-синий",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень",
+      "зима"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Лавандовые шорты",
+    "category": "Низ",
+    "color": "#E6E6FA",
+    "colorName": "Лавандовый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Красное коктейльное платье",
+    "category": "Платья",
+    "color": "#DC143C",
+    "colorName": "Красный",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Чёрное вечернее платье",
+    "category": "Платья",
+    "color": "#0A0A0A",
+    "colorName": "Чёрный",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Цветочное летнее платье",
+    "category": "Платья",
+    "color": "#FF69B4",
+    "colorName": "Цветочный принт",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Тёплое серое платье-свитер",
+    "category": "Платья",
+    "color": "#808080",
+    "colorName": "Серый",
+    "gender": "женский",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Лавандовое миди платье",
+    "category": "Платья",
+    "color": "#B19CD9",
+    "colorName": "Лавандовый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "лето"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Бежевый тренч",
+    "category": "Верхняя одежда",
+    "color": "#D2B48C",
+    "colorName": "Бежевый",
+    "gender": "унисекс",
+    "warmth": "Средняя",
+    "waterproof": true,
+    "seasons": [
+      "весна",
+      "осень",
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Чёрное шерстяное пальто",
+    "category": "Верхняя одежда",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "унисекс",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Белый пуховик",
+    "category": "Верхняя одежда",
+    "color": "#FFFAFA",
+    "colorName": "Белый",
+    "gender": "женский",
+    "warmth": "Тёплый",
+    "waterproof": true,
+    "seasons": [
+      "зима"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Джинсовая куртка",
+    "category": "Верхняя одежда",
+    "color": "#6CA0DC",
+    "colorName": "Голубой деним",
+    "gender": "унисекс",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна",
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Оливковый бомбер",
+    "category": "Верхняя одежда",
+    "color": "#808000",
+    "colorName": "Оливковый",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "Розовое пальто",
+    "category": "Верхняя одежда",
+    "color": "#FF6B9D",
+    "colorName": "Розовый",
+    "gender": "женский",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 30,
+    "name": "Тёмно-синий пуховик",
+    "category": "Верхняя одежда",
+    "color": "#2C3E50",
+    "colorName": "Тёмно-синий",
+    "gender": "мужской",
+    "warmth": "Тёплый",
+    "waterproof": true,
+    "seasons": [
+      "зима"
+    ]
+  },
+  {
+    "id": 31,
+    "name": "Серая парка",
+    "category": "Верхняя одежда",
+    "color": "#5D6D7E",
+    "colorName": "Серый",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": true,
+    "seasons": [
+      "осень",
+      "весна"
+    ]
+  },
+  {
+    "id": 32,
+    "name": "Кожаная куртка косуха",
+    "category": "Верхняя одежда",
+    "color": "#2F1810",
+    "colorName": "Коричневый",
+    "gender": "унисекс",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Чёрные кожаные ботинки",
+    "category": "Обувь",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "унисекс",
+    "warmth": "Средняя",
+    "waterproof": true,
+    "seasons": [
+      "осень",
+      "весна",
+      "межсезонье"
+    ]
+  },
+  {
+    "id": 34,
+    "name": "Белые кроссовки",
+    "category": "Обувь",
+    "color": "#FFFFFF",
+    "colorName": "Белый",
+    "gender": "унисекс",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Бежевые туфли на каблуке",
+    "category": "Обувь",
+    "color": "#F5DEB3",
+    "colorName": "Бежевый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 36,
+    "name": "Коричневые зимние сапоги",
+    "category": "Обувь",
+    "color": "#5C4033",
+    "colorName": "Коричневый",
+    "gender": "унисекс",
+    "warmth": "Тёплый",
+    "waterproof": true,
+    "seasons": [
+      "зима"
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Красные балетки",
+    "category": "Обувь",
+    "color": "#B22222",
+    "colorName": "Красный",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 38,
+    "name": "Пудровые лоферы",
+    "category": "Обувь",
+    "color": "#E8C4C4",
+    "colorName": "Пудровый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 39,
+    "name": "Чёрные оксфорды",
+    "category": "Обувь",
+    "color": "#1A0F05",
+    "colorName": "Чёрный",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 40,
+    "name": "Тёмные кроссовки",
+    "category": "Обувь",
+    "color": "#333333",
+    "colorName": "Тёмно-серый",
+    "gender": "мужской",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 41,
+    "name": "Чёрная вязаная шапка",
+    "category": "Головной убор",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "унисекс",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 42,
+    "name": "Бежевый берет",
+    "category": "Головной убор",
+    "color": "#D2B48C",
+    "colorName": "Бежевый",
+    "gender": "женский",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "осень",
+      "весна"
+    ]
+  },
+  {
+    "id": 43,
+    "name": "Соломенная шляпа",
+    "category": "Головной убор",
+    "color": "#DEB887",
+    "colorName": "Соломенный",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 44,
+    "name": "Розовая шапка с помпоном",
+    "category": "Головной убор",
+    "color": "#FF6B9D",
+    "colorName": "Розовый",
+    "gender": "женский",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима"
+    ]
+  },
+  {
+    "id": 45,
+    "name": "Тёмно-синяя кепка",
+    "category": "Головной убор",
+    "color": "#2C3E50",
+    "colorName": "Тёмно-синий",
+    "gender": "мужской",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 46,
+    "name": "Серебряное колье",
+    "category": "Аксессуар",
+    "color": "#C0C0C0",
+    "colorName": "Серебро",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна",
+      "осень",
+      "зима"
+    ]
+  },
+  {
+    "id": 47,
+    "name": "Бордовый кожаный ремень",
+    "category": "Аксессуар",
+    "color": "#722F37",
+    "colorName": "Бордовый",
+    "gender": "унисекс",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "лето",
+      "осень",
+      "зима"
+    ]
+  },
+  {
+    "id": 48,
+    "name": "Лавандовый шёлковый шарф",
+    "category": "Аксессуар",
+    "color": "#B19CD9",
+    "colorName": "Лавандовый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 49,
+    "name": "Чёрная кожаная сумка",
+    "category": "Аксессуар",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "лето",
+      "осень",
+      "зима"
+    ]
+  },
+  {
+    "id": 50,
+    "name": "Золотые серьги-кольца",
+    "category": "Аксессуар",
+    "color": "#FFD700",
+    "colorName": "Золото",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна",
+      "осень",
+      "зима"
+    ]
+  },
+  {
+    "id": 51,
+    "name": "Красный шарф",
+    "category": "Аксессуар",
+    "color": "#C0392B",
+    "colorName": "Красный",
+    "gender": "мужской",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима",
+      "осень"
+    ]
+  },
+  {
+    "id": 52,
+    "name": "Чёрные кожаные перчатки",
+    "category": "Аксессуар",
+    "color": "#1A1A1A",
+    "colorName": "Чёрный",
+    "gender": "унисекс",
+    "warmth": "Тёплый",
+    "waterproof": false,
+    "seasons": [
+      "зима"
+    ]
+  },
+  {
+    "id": 53,
+    "name": "Коричневый кожаный рюкзак",
+    "category": "Аксессуар",
+    "color": "#8B4513",
+    "colorName": "Коричневый",
+    "gender": "мужской",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "лето",
+      "осень"
+    ]
+  },
+  {
+    "id": 54,
+    "name": "Бежевые брюки палаццо",
+    "category": "Низ",
+    "color": "#E8D4C4",
+    "colorName": "Бежевый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 55,
+    "name": "Серые классические брюки",
+    "category": "Низ",
+    "color": "#5D6D7E",
+    "colorName": "Серый",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень",
+      "зима"
+    ]
+  },
+  {
+    "id": 56,
+    "name": "Золотистые сандалии",
+    "category": "Обувь",
+    "color": "#FFD700",
+    "colorName": "Золотой",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето"
+    ]
+  },
+  {
+    "id": 57,
+    "name": "Синяя ветровка",
+    "category": "Верхняя одежда",
+    "color": "#4A90D9",
+    "colorName": "Синий",
+    "gender": "мужской",
+    "warmth": "Лёгкий",
+    "waterproof": true,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 58,
+    "name": "Коралловая блузка",
+    "category": "Верх",
+    "color": "#FF7F50",
+    "colorName": "Коралловый",
+    "gender": "женский",
+    "warmth": "Лёгкий",
+    "waterproof": false,
+    "seasons": [
+      "лето",
+      "весна"
+    ]
+  },
+  {
+    "id": 59,
+    "name": "Тёмно-синий блейзер",
+    "category": "Верхняя одежда",
+    "color": "#2C3E50",
+    "colorName": "Тёмно-синий",
+    "gender": "мужской",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "весна",
+      "осень"
+    ]
+  },
+  {
+    "id": 60,
+    "name": "Карамельный свитер",
+    "category": "Верх",
+    "color": "#D4A574",
+    "colorName": "Карамельный",
+    "gender": "женский",
+    "warmth": "Средняя",
+    "waterproof": false,
+    "seasons": [
+      "осень",
+      "весна"
     ]
   }
 ]

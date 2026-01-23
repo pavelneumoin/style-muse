@@ -47,9 +47,10 @@
                 <!-- Avatars Section -->
                 <div class="avatar-section">
                     <h3 class="avatar-title">✨ Ваши образы на сегодня</h3>
+                    <p class="avatar-hint">Наведите на аватара, чтобы увидеть список вещей</p>
                     <div class="avatars-container">
                         <!-- Female Avatar -->
-                        <div class="avatar-wrapper">
+                        <div class="avatar-wrapper" data-tooltip-target="female-tooltip">
                             <h4 style="color: var(--accent-pink); margin-bottom: 10px;">👩 Для неё</h4>
                             <div class="avatar-container">
                                 <svg viewBox="0 0 200 300" width="180" height="270" class="avatar-svg">
@@ -78,115 +79,120 @@
 
                                     <!-- Clothing based on temperature -->
                                     {% if weather_data.temperature > 25 %}
-                                    <!-- Summer - Pink dress -->
+                                    {% set dress_color = female_outfit.dress.color if female_outfit.dress else '#ff6b9d'
+                                    %}
                                     <path
                                         d="M65 120 Q55 170 60 230 L140 230 Q145 170 135 120 Q120 115 100 115 Q80 115 65 120"
-                                        fill="#ff6b9d" stroke="#ff4081" stroke-width="2" />
-                                    <path d="M65 120 Q80 130 100 130 Q120 130 135 120" stroke="#ff4081" stroke-width="2"
-                                        fill="none" />
-                                    <!-- Sandals -->
-                                    <ellipse cx="85" cy="292" rx="15" ry="5" fill="#ffd700" />
-                                    <ellipse cx="115" cy="292" rx="15" ry="5" fill="#ffd700" />
-                                    <!-- Sunglasses -->
+                                        fill="{{ dress_color }}" stroke="{{ dress_color }}" stroke-width="2" />
+                                    {% set shoes_color = female_outfit.shoes.color if female_outfit.shoes else '#ffd700'
+                                    %}
+                                    <ellipse cx="85" cy="292" rx="15" ry="5" fill="{{ shoes_color }}" />
+                                    <ellipse cx="115" cy="292" rx="15" ry="5" fill="{{ shoes_color }}" />
                                     <rect x="75" y="55" rx="3" width="20" height="12" fill="#333" opacity="0.8" />
                                     <rect x="105" y="55" rx="3" width="20" height="12" fill="#333" opacity="0.8" />
                                     <line x1="95" y1="61" x2="105" y2="61" stroke="#333" stroke-width="2" />
 
                                     {% elif weather_data.temperature >= 15 %}
-                                    <!-- Spring - Blouse + Jeans -->
+                                    {% set top_color = female_outfit.top.color if female_outfit.top else '#b19cd9' %}
+                                    {% set bottom_color = female_outfit.bottom.color if female_outfit.bottom else
+                                    '#5b7bb3' %}
                                     <path
                                         d="M60 120 Q50 145 50 170 L65 170 L65 190 L135 190 L135 170 L150 170 Q150 145 140 120 Q120 115 100 115 Q80 115 60 120"
-                                        fill="#b19cd9" stroke="#9370db" stroke-width="1" />
-                                    <rect x="68" y="190" width="64" height="50" fill="#5b7bb3" rx="3" />
-                                    <line x1="100" y1="190" x2="100" y2="240" stroke="#4a6a9f" stroke-width="1" />
-                                    <!-- Sneakers -->
-                                    <ellipse cx="85" cy="292" rx="16" ry="7" fill="#fff" />
-                                    <ellipse cx="115" cy="292" rx="16" ry="7" fill="#fff" />
-                                    <path d="M69 292 Q85 286 101 292" stroke="#ff6b9d" stroke-width="3" fill="none" />
-                                    <path d="M99 292 Q115 286 131 292" stroke="#ff6b9d" stroke-width="3" fill="none" />
+                                        fill="{{ top_color }}" stroke="{{ top_color }}" stroke-width="1" />
+                                    <rect x="68" y="190" width="64" height="50" fill="{{ bottom_color }}" rx="3" />
+                                    {% set shoes_color = female_outfit.shoes.color if female_outfit.shoes else '#fff' %}
+                                    <ellipse cx="85" cy="292" rx="16" ry="7" fill="{{ shoes_color }}" />
+                                    <ellipse cx="115" cy="292" rx="16" ry="7" fill="{{ shoes_color }}" />
 
                                     {% elif weather_data.temperature >= 5 %}
-                                    <!-- Autumn - Sweater + Pants -->
+                                    {% set top_color = female_outfit.top.color if female_outfit.top else '#d4a574' %}
+                                    {% set bottom_color = female_outfit.bottom.color if female_outfit.bottom else
+                                    '#3d3d3d' %}
                                     <path
                                         d="M55 120 Q40 150 40 180 L60 180 L60 200 L140 200 L140 180 L160 180 Q160 150 145 120 Q120 115 100 115 Q80 115 55 120"
-                                        fill="#d4a574" stroke="#c49464" stroke-width="1" />
-                                    <rect x="68" y="200" width="64" height="40" fill="#3d3d3d" rx="3" />
-                                    <!-- Scarf light -->
-                                    <path d="M80 115 Q100 125 120 115" stroke="#b19cd9" stroke-width="8" fill="none"
-                                        stroke-linecap="round" />
-                                    <!-- Boots -->
-                                    <rect x="72" y="278" width="26" height="18" fill="#5c4033" rx="4" />
-                                    <rect x="102" y="278" width="26" height="18" fill="#5c4033" rx="4" />
+                                        fill="{{ top_color }}" stroke="{{ top_color }}" stroke-width="1" />
+                                    <rect x="68" y="200" width="64" height="40" fill="{{ bottom_color }}" rx="3" />
+                                    {% set acc_color = female_outfit.accessory.color if female_outfit.accessory else
+                                    '#b19cd9' %}
+                                    <path d="M80 115 Q100 125 120 115" stroke="{{ acc_color }}" stroke-width="8"
+                                        fill="none" stroke-linecap="round" />
+                                    {% set shoes_color = female_outfit.shoes.color if female_outfit.shoes else '#5c4033'
+                                    %}
+                                    <rect x="72" y="278" width="26" height="18" fill="{{ shoes_color }}" rx="4" />
+                                    <rect x="102" y="278" width="26" height="18" fill="{{ shoes_color }}" rx="4" />
 
                                     {% else %}
-                                    <!-- Winter - Coat + Hat + Scarf -->
+                                    {% set coat_color = female_outfit.coat.color if female_outfit.coat else '#ff6b9d' %}
+                                    {% set acc_color = female_outfit.accessory.color if female_outfit.accessory else
+                                    '#b19cd9' %}
                                     <path
                                         d="M45 120 Q30 170 40 240 L60 240 L60 245 L140 245 L140 240 L160 240 Q170 170 155 120 Q120 115 100 115 Q80 115 45 120"
-                                        fill="#ff6b9d" stroke="#ff4081" stroke-width="1" />
+                                        fill="{{ coat_color }}" stroke="{{ coat_color }}" stroke-width="1" />
                                     <circle cx="100" cy="150" r="5" fill="#fff" />
                                     <circle cx="100" cy="175" r="5" fill="#fff" />
                                     <circle cx="100" cy="200" r="5" fill="#fff" />
-                                    <!-- Scarf -->
-                                    <path d="M70 108 Q100 120 130 108" stroke="#b19cd9" stroke-width="12" fill="none"
-                                        stroke-linecap="round" />
-                                    <rect x="125" y="115" width="14" height="45" fill="#b19cd9" rx="4" />
-                                    <!-- Hat -->
-                                    <ellipse cx="100" cy="22" rx="42" ry="14" fill="#ff6b9d" />
-                                    <ellipse cx="100" cy="18" rx="38" ry="20" fill="#ff6b9d" />
-                                    <circle cx="100" cy="5" r="10" fill="#fff" />
-                                    <!-- Warm boots -->
-                                    <rect x="68" y="275" width="30" height="22" fill="#5c4033" rx="5" />
-                                    <rect x="102" y="275" width="30" height="22" fill="#5c4033" rx="5" />
-                                    <path d="M68 282 L98 282" stroke="#8b7355" stroke-width="4" />
-                                    <path d="M102 282 L132 282" stroke="#8b7355" stroke-width="4" />
-                                    <!-- Mittens -->
-                                    <ellipse cx="35" cy="185" rx="10" ry="14" fill="#b19cd9" />
-                                    <ellipse cx="165" cy="185" rx="10" ry="14" fill="#b19cd9" />
+                                    <path d="M70 108 Q100 120 130 108" stroke="{{ acc_color }}" stroke-width="12"
+                                        fill="none" stroke-linecap="round" />
+                                    <rect x="125" y="115" width="14" height="45" fill="{{ acc_color }}" rx="4" />
+                                    {% set shoes_color = female_outfit.shoes.color if female_outfit.shoes else '#5c4033'
+                                    %}
+                                    <rect x="68" y="275" width="30" height="22" fill="{{ shoes_color }}" rx="5" />
+                                    <rect x="102" y="275" width="30" height="22" fill="{{ shoes_color }}" rx="5" />
+                                    <ellipse cx="35" cy="185" rx="10" ry="14" fill="{{ acc_color }}" />
+                                    <ellipse cx="165" cy="185" rx="10" ry="14" fill="{{ acc_color }}" />
                                     {% endif %}
 
                                     {% if 'дождь' in weather_data.description.lower() or 'ливень' in
                                     weather_data.description.lower() %}
-                                    <!-- Umbrella -->
                                     <ellipse cx="165" cy="90" rx="35" ry="18" fill="#ff6b9d" />
                                     <line x1="165" y1="90" x2="165" y2="145" stroke="#555" stroke-width="3" />
-                                    <path d="M158 145 Q165 152 172 145" stroke="#ffd700" stroke-width="3" fill="none" />
                                     {% endif %}
 
                                     <!-- Face -->
                                     <ellipse cx="100" cy="65" rx="35" ry="40" fill="url(#skinGradientF)" />
-
-                                    <!-- Hair front -->
                                     <path d="M65 45 Q70 20 100 15 Q130 20 135 45 Q120 35 100 35 Q80 35 65 45"
                                         fill="url(#hairGradientF)" />
 
-                                    <!-- Eyes -->
                                     {% if weather_data.temperature
                                     <= 25 %} <ellipse cx="85" cy="60" rx="6" ry="5" fill="#2d1f15" />
                                     <ellipse cx="115" cy="60" rx="6" ry="5" fill="#2d1f15" />
                                     <circle cx="83" cy="58" r="2" fill="white" />
                                     <circle cx="113" cy="58" r="2" fill="white" />
                                     {% endif %}
-
-                                    <!-- Eyebrows -->
                                     <path d="M76 50 Q85 46 94 50" stroke="#4a3728" stroke-width="2" fill="none" />
                                     <path d="M106 50 Q115 46 124 50" stroke="#4a3728" stroke-width="2" fill="none" />
-
-                                    <!-- Nose -->
                                     <path d="M100 62 Q104 72 100 76" stroke="#e8b4a0" stroke-width="2" fill="none" />
-
-                                    <!-- Lips -->
                                     <path d="M90 84 Q100 91 110 84" stroke="#e07a7a" stroke-width="3" fill="#f09090"
                                         stroke-linecap="round" />
-
-                                    <!-- Blush -->
                                     <ellipse cx="73" cy="74" rx="9" ry="5" fill="#ffcccc" opacity="0.6" />
                                     <ellipse cx="127" cy="74" rx="9" ry="5" fill="#ffcccc" opacity="0.6" />
+
+                                    <!-- Hat for winter (drawn AFTER face) -->
+                                    {% if weather_data.temperature
+                                    < 5 %} {% set hat_color=female_outfit.hat.color if female_outfit.hat else '#ff6b9d'
+                                        %} <ellipse cx="100" cy="22" rx="42" ry="14" fill="{{ hat_color }}" />
+                                    <ellipse cx="100" cy="18" rx="38" ry="20" fill="{{ hat_color }}" />
+                                    <circle cx="100" cy="5" r="10" fill="#fff" />
+                                    {% endif %}
                                 </svg>
                             </div>
+
+                            <!-- Tooltip popup -->
+                            {% if female_outfit %}
+                            <div class="outfit-tooltip" id="female-tooltip">
+                                <div class="tooltip-title">👗 Образ для неё</div>
+                                {% for key, item in female_outfit.items() %}
+                                <div class="tooltip-item">
+                                    <span class="tooltip-color" style="background: {{ item.color }}"></span>
+                                    <span>{{ item.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
 
                         <!-- Male Avatar -->
-                        <div class="avatar-wrapper">
+                        <div class="avatar-wrapper" data-tooltip-target="male-tooltip">
                             <h4 style="color: var(--accent-lavender); margin-bottom: 10px;">👨 Для него</h4>
                             <div class="avatar-container">
                                 <svg viewBox="0 0 200 300" width="180" height="270" class="avatar-svg">
@@ -210,107 +216,129 @@
 
                                     <!-- Clothing based on temperature -->
                                     {% if weather_data.temperature > 25 %}
-                                    <!-- Summer - T-shirt + Shorts -->
+                                    {% set top_color = male_outfit.top.color if male_outfit.top else '#4a90d9' %}
+                                    {% set bottom_color = male_outfit.bottom.color if male_outfit.bottom else '#d4a574'
+                                    %}
                                     <path
                                         d="M55 115 Q45 135 45 160 L60 160 L60 185 L140 185 L140 160 L155 160 Q155 135 145 115 Q120 110 100 110 Q80 110 55 115"
-                                        fill="#4a90d9" stroke="#3a7bc8" stroke-width="1" />
-                                    <rect x="70" y="185" width="60" height="50" fill="#d4a574" rx="3" />
-                                    <!-- Sneakers -->
-                                    <ellipse cx="85" cy="292" rx="17" ry="7" fill="#333" />
-                                    <ellipse cx="115" cy="292" rx="17" ry="7" fill="#333" />
-                                    <!-- Sunglasses -->
+                                        fill="{{ top_color }}" stroke="{{ top_color }}" stroke-width="1" />
+                                    <rect x="70" y="185" width="60" height="50" fill="{{ bottom_color }}" rx="3" />
+                                    {% set shoes_color = male_outfit.shoes.color if male_outfit.shoes else '#333' %}
+                                    <ellipse cx="85" cy="292" rx="17" ry="7" fill="{{ shoes_color }}" />
+                                    <ellipse cx="115" cy="292" rx="17" ry="7" fill="{{ shoes_color }}" />
                                     <rect x="72" y="52" rx="2" width="22" height="14" fill="#222" opacity="0.9" />
                                     <rect x="106" y="52" rx="2" width="22" height="14" fill="#222" opacity="0.9" />
                                     <line x1="94" y1="59" x2="106" y2="59" stroke="#222" stroke-width="2" />
 
                                     {% elif weather_data.temperature >= 15 %}
-                                    <!-- Spring - Shirt + Jeans -->
+                                    {% set top_color = male_outfit.top.color if male_outfit.top else '#6b8e9f' %}
+                                    {% set bottom_color = male_outfit.bottom.color if male_outfit.bottom else '#2c3e50'
+                                    %}
                                     <path
                                         d="M55 115 Q42 140 42 175 L62 175 L62 195 L138 195 L138 175 L158 175 Q158 140 145 115 Q120 110 100 110 Q80 110 55 115"
-                                        fill="#6b8e9f" stroke="#5a7d8e" stroke-width="1" />
-                                    <line x1="100" y1="115" x2="100" y2="195" stroke="#5a7d8e" stroke-width="1" />
+                                        fill="{{ top_color }}" stroke="{{ top_color }}" stroke-width="1" />
                                     <circle cx="100" cy="130" r="3" fill="#fff" />
                                     <circle cx="100" cy="150" r="3" fill="#fff" />
                                     <circle cx="100" cy="170" r="3" fill="#fff" />
-                                    <rect x="68" y="195" width="64" height="40" fill="#2c3e50" />
-                                    <!-- Shoes -->
-                                    <ellipse cx="85" cy="292" rx="17" ry="8" fill="#5c4033" />
-                                    <ellipse cx="115" cy="292" rx="17" ry="8" fill="#5c4033" />
+                                    <rect x="68" y="195" width="64" height="40" fill="{{ bottom_color }}" />
+                                    {% set shoes_color = male_outfit.shoes.color if male_outfit.shoes else '#5c4033' %}
+                                    <ellipse cx="85" cy="292" rx="17" ry="8" fill="{{ shoes_color }}" />
+                                    <ellipse cx="115" cy="292" rx="17" ry="8" fill="{{ shoes_color }}" />
 
                                     {% elif weather_data.temperature >= 5 %}
-                                    <!-- Autumn - Jacket + Pants -->
+                                    {% set coat_color = male_outfit.coat.color if male_outfit.coat else '#5d6d7e' %}
+                                    {% set bottom_color = male_outfit.bottom.color if male_outfit.bottom else '#2c3e50'
+                                    %}
                                     <path
                                         d="M48 115 Q32 155 35 200 L58 200 L58 210 L142 210 L142 200 L165 200 Q168 155 152 115 Q120 110 100 110 Q80 110 48 115"
-                                        fill="#5d6d7e" stroke="#4d5d6e" stroke-width="1" />
-                                    <line x1="100" y1="115" x2="100" y2="210" stroke="#4d5d6e" stroke-width="2" />
-                                    <rect x="68" y="210" width="64" height="25" fill="#2c3e50" />
-                                    <!-- Boots -->
-                                    <rect x="70" y="276" width="28" height="20" fill="#4a3728" rx="4" />
-                                    <rect x="102" y="276" width="28" height="20" fill="#4a3728" rx="4" />
+                                        fill="{{ coat_color }}" stroke="{{ coat_color }}" stroke-width="1" />
+                                    <rect x="68" y="210" width="64" height="25" fill="{{ bottom_color }}" />
+                                    {% set shoes_color = male_outfit.shoes.color if male_outfit.shoes else '#4a3728' %}
+                                    <rect x="70" y="276" width="28" height="20" fill="{{ shoes_color }}" rx="4" />
+                                    <rect x="102" y="276" width="28" height="20" fill="{{ shoes_color }}" rx="4" />
 
                                     {% else %}
-                                    <!-- Winter - Coat + Hat -->
+                                    {% set coat_color = male_outfit.coat.color if male_outfit.coat else '#2c3e50' %}
+                                    {% set acc_color = male_outfit.accessory.color if male_outfit.accessory else
+                                    '#c0392b' %}
                                     <path
                                         d="M42 115 Q25 165 30 245 L58 245 L58 250 L142 250 L142 245 L170 245 Q175 165 158 115 Q120 110 100 110 Q80 110 42 115"
-                                        fill="#2c3e50" stroke="#1a252f" stroke-width="1" />
+                                        fill="{{ coat_color }}" stroke="{{ coat_color }}" stroke-width="1" />
                                     <line x1="100" y1="115" x2="100" y2="250" stroke="#1a252f" stroke-width="2" />
                                     <circle cx="100" cy="145" r="5" fill="#333" />
                                     <circle cx="100" cy="175" r="5" fill="#333" />
                                     <circle cx="100" cy="205" r="5" fill="#333" />
-                                    <!-- Scarf -->
-                                    <path d="M65 108 Q100 120 135 108" stroke="#c0392b" stroke-width="14" fill="none"
-                                        stroke-linecap="round" />
-                                    <rect x="130" y="115" width="16" height="50" fill="#c0392b" rx="4" />
-                                    <!-- Hat -->
-                                    <rect x="60" y="15" width="80" height="35" fill="#2c3e50" rx="4" />
-                                    <rect x="55" y="45" width="90" height="8" fill="#2c3e50" />
-                                    <!-- Boots -->
-                                    <rect x="68" y="272" width="30" height="25" fill="#1a0f05" rx="5" />
-                                    <rect x="102" y="272" width="30" height="25" fill="#1a0f05" rx="5" />
-                                    <!-- Gloves -->
-                                    <ellipse cx="28" cy="200" rx="12" ry="16" fill="#2c3e50" />
-                                    <ellipse cx="172" cy="200" rx="12" ry="16" fill="#2c3e50" />
+                                    <path d="M65 108 Q100 120 135 108" stroke="{{ acc_color }}" stroke-width="14"
+                                        fill="none" stroke-linecap="round" />
+                                    <rect x="130" y="115" width="16" height="50" fill="{{ acc_color }}" rx="4" />
+                                    {% set shoes_color = male_outfit.shoes.color if male_outfit.shoes else '#1a0f05' %}
+                                    <rect x="68" y="272" width="30" height="25" fill="{{ shoes_color }}" rx="5" />
+                                    <rect x="102" y="272" width="30" height="25" fill="{{ shoes_color }}" rx="5" />
+                                    <ellipse cx="28" cy="200" rx="12" ry="16" fill="{{ coat_color }}" />
+                                    <ellipse cx="172" cy="200" rx="12" ry="16" fill="{{ coat_color }}" />
                                     {% endif %}
 
                                     {% if 'дождь' in weather_data.description.lower() %}
-                                    <!-- Umbrella -->
                                     <ellipse cx="170" cy="85" rx="32" ry="16" fill="#2c3e50" />
                                     <line x1="170" y1="85" x2="170" y2="140" stroke="#444" stroke-width="3" />
                                     {% endif %}
 
                                     <!-- Face -->
                                     <ellipse cx="100" cy="58" rx="38" ry="42" fill="url(#skinGradientM)" />
-
-                                    <!-- Hair -->
                                     <path d="M62 35 Q65 12 100 8 Q135 12 138 35 Q130 20 100 18 Q70 20 62 35"
                                         fill="url(#hairGradientM)" />
                                     <path
                                         d="M62 35 Q60 50 65 55 L65 45 Q70 35 100 32 Q130 35 135 45 L135 55 Q140 50 138 35"
                                         fill="url(#hairGradientM)" />
-
-                                    <!-- Eyebrows (thicker for male) -->
                                     <path d="M72 44 Q82 40 92 44" stroke="#3d2914" stroke-width="3" fill="none" />
                                     <path d="M108 44 Q118 40 128 44" stroke="#3d2914" stroke-width="3" fill="none" />
-
-                                    <!-- Eyes -->
                                     {% if weather_data.temperature
                                     <= 25 %} <ellipse cx="82" cy="55" rx="7" ry="5" fill="#2d1f15" />
                                     <ellipse cx="118" cy="55" rx="7" ry="5" fill="#2d1f15" />
                                     <circle cx="80" cy="53" r="2" fill="white" />
                                     <circle cx="116" cy="53" r="2" fill="white" />
                                     {% endif %}
-
-                                    <!-- Nose -->
                                     <path d="M100 58 Q106 70 100 75" stroke="#d4a88c" stroke-width="2" fill="none" />
-
-                                    <!-- Mouth -->
                                     <path d="M90 82 Q100 86 110 82" stroke="#c4846c" stroke-width="2" fill="none"
                                         stroke-linecap="round" />
+
+                                    <!-- Hat for winter (drawn AFTER face) -->
+                                    {% if weather_data.temperature
+                                    < 5 %} {% set hat_color=male_outfit.hat.color if male_outfit.hat else '#2c3e50' %}
+                                        <rect x="60" y="10" width="80" height="40" fill="{{ hat_color }}" rx="6" />
+                                    <rect x="55" y="45" width="90" height="10" fill="{{ hat_color }}" rx="2" />
+                                    {% endif %}
                                 </svg>
                             </div>
+
+                            <!-- Tooltip popup -->
+                            {% if male_outfit %}
+                            <div class="outfit-tooltip" id="male-tooltip">
+                                <div class="tooltip-title">👔 Образ для него</div>
+                                {% for key, item in male_outfit.items() %}
+                                <div class="tooltip-item">
+                                    <span class="tooltip-color" style="background: {{ item.color }}"></span>
+                                    <span>{{ item.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+
+                <!-- Health Tips Widget -->
+                {% if health_tips %}
+                <div class="health-widget">
+                    <div class="health-header">
+                        <span class="health-icon">🩺</span>
+                        <h3 class="health-title">Советы для здоровья</h3>
+                    </div>
+                    <div class="health-content">
+                        {{ health_tips | replace('\n', '<br>') | safe }}
+                    </div>
+                </div>
+                {% endif %}
 
                 <!-- AI Recommendations -->
                 <div class="recommendation-card ai-card">
@@ -375,8 +403,7 @@
                     <div class="magnetic-advice">
                         💜 <strong>Совет:</strong>
                         {% if magnetic_level == 'high' %}
-                        Сегодня возможно недомогание. Пей больше воды, избегай стресса, больше отдыхай. Носи комфортную
-                        одежду.
+                        Сегодня возможно недомогание. Пей больше воды, избегай стресса, больше отдыхай.
                         {% elif magnetic_level == 'medium' %}
                         Небольшая магнитная активность. Следи за самочувствием и проводи время на свежем воздухе.
                         {% else %}
