@@ -14,74 +14,178 @@ app = Flask(__name__)
 # API ключи
 API_KEY = os.getenv('OPENWEATHER_API_KEY', 'f047613185f40b38100e65c37450b05a')
 
-# GigaChat Configuration
-# For Render: uses environment variable
-# For local: uses hardcoded key
-GIGACHAT_CREDENTIALS = os.environ.get('GIGACHAT_CREDENTIALS', 'MDE5Yjg3ZGQtYmQ2My03ZTYwLTk1ZmUtYjk4ZmZiYTVjMmI3OmY3YzZjZmNjLWQ2MzctNDMxNy04NTgzLWY0YzIzMDJkNTdmYQ==')
-GIGACHAT_SCOPE = os.environ.get('GIGACHAT_SCOPE', 'GIGACHAT_API_CORP')
+# YandexGPT Configuration
+YANDEX_FOLDER_ID = os.environ.get('YANDEX_FOLDER_ID', '')
+YANDEX_API_KEY = os.environ.get('YANDEX_API_KEY', '')
+YANDEX_GPT_MODEL = f"gpt://{YANDEX_FOLDER_ID}/yandexgpt-lite/latest"
+
+# Проверка при старте
+print(f"[STARTUP] YANDEX_FOLDER_ID: {YANDEX_FOLDER_ID}")
+print(f"[STARTUP] YANDEX_API_KEY loaded: {bool(YANDEX_API_KEY)}")
+
+# ========== Цветовая палитра гардероба ==========
+import random
+
+COLOR_PALETTE = [
+    # Базовые цвета
+    {"hex": "#FFFFFF", "name": "Белый"},
+    {"hex": "#1A1A1A", "name": "Чёрный"},
+    {"hex": "#808080", "name": "Серый"},
+    {"hex": "#5D6D7E", "name": "Тёмно-серый"},
+    
+    # Красные оттенки
+    {"hex": "#DC143C", "name": "Красный"},
+    {"hex": "#B22222", "name": "Тёмно-красный"},
+    {"hex": "#FF6B6B", "name": "Коралловый"},
+    {"hex": "#722F37", "name": "Бордовый"},
+    {"hex": "#C0392B", "name": "Алый"},
+    
+    # Розовые оттенки
+    {"hex": "#FFB6C1", "name": "Нежно-розовый"},
+    {"hex": "#FF69B4", "name": "Ярко-розовый"},
+    {"hex": "#FF6B9D", "name": "Розовый"},
+    {"hex": "#E8C4C4", "name": "Пудровый"},
+    {"hex": "#FFC0CB", "name": "Светло-розовый"},
+    
+    # Оранжевые оттенки
+    {"hex": "#FF8C00", "name": "Оранжевый"},
+    {"hex": "#FF7F50", "name": "Коралловый"},
+    {"hex": "#E67E22", "name": "Тёплый оранжевый"},
+    {"hex": "#D35400", "name": "Тыквенный"},
+    
+    # Жёлтые оттенки
+    {"hex": "#FFD700", "name": "Золотой"},
+    {"hex": "#F1C40F", "name": "Жёлтый"},
+    {"hex": "#FFFACD", "name": "Лимонный"},
+    {"hex": "#DEB887", "name": "Песочный"},
+    
+    # Бежевые оттенки
+    {"hex": "#F5DEB3", "name": "Бежевый"},
+    {"hex": "#D2B48C", "name": "Тёмно-бежевый"},
+    {"hex": "#E8D4C4", "name": "Кремовый"},
+    {"hex": "#FFFAF0", "name": "Слоновая кость"},
+    
+    # Коричневые оттенки
+    {"hex": "#8B4513", "name": "Коричневый"},
+    {"hex": "#5C4033", "name": "Шоколадный"},
+    {"hex": "#A0522D", "name": "Терракотовый"},
+    {"hex": "#2F1810", "name": "Тёмно-коричневый"},
+    
+    # Зелёные оттенки
+    {"hex": "#50C878", "name": "Изумрудный"},
+    {"hex": "#355E3B", "name": "Тёмно-зелёный"},
+    {"hex": "#2ECC71", "name": "Мятный"},
+    {"hex": "#808000", "name": "Оливковый"},
+    {"hex": "#27AE60", "name": "Зелёный"},
+    {"hex": "#1ABC9C", "name": "Бирюзово-зелёный"},
+    
+    # Синие оттенки
+    {"hex": "#4169E1", "name": "Синий"},
+    {"hex": "#6CA0DC", "name": "Голубой"},
+    {"hex": "#2C3E50", "name": "Тёмно-синий"},
+    {"hex": "#3498DB", "name": "Небесный"},
+    {"hex": "#4A90D9", "name": "Васильковый"},
+    {"hex": "#1E3A5F", "name": "Полуночный синий"},
+    
+    # Фиолетовые оттенки
+    {"hex": "#B19CD9", "name": "Лавандовый"},
+    {"hex": "#9B59B6", "name": "Фиолетовый"},
+    {"hex": "#8E44AD", "name": "Пурпурный"},
+    {"hex": "#E6E6FA", "name": "Светло-лавандовый"},
+    {"hex": "#663399", "name": "Индиго"},
+    
+    # Металлические оттенки
+    {"hex": "#C0C0C0", "name": "Серебро"},
+    {"hex": "#CD7F32", "name": "Бронза"},
+]
+
+def get_random_color():
+    """Возвращает случайный цвет из палитры"""
+    color = random.choice(COLOR_PALETTE)
+    return color["hex"], color["name"]
+
+def get_color_by_hex(hex_code):
+    """Находит название цвета по HEX-коду"""
+    for color in COLOR_PALETTE:
+        if color["hex"].lower() == hex_code.lower():
+            return color["name"]
+    return "Неизвестный"
 
 
-def get_gigachat_token():
-    """Получаем токен для GigaChat API"""
-    try:
-        # Если нет ключей, возвращаем None
-        if not GIGACHAT_CREDENTIALS:
-            return None
-        
-        url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            'RqUID': str(uuid.uuid4()),
-            'Authorization': f'Basic {GIGACHAT_CREDENTIALS}'
-        }
-        data = {'scope': GIGACHAT_SCOPE}
-        
-        response = requests.post(url, headers=headers, data=data, verify=False, timeout=10)
-        
-        if response.status_code == 200:
-            return response.json().get('access_token')
-    except Exception as e:
-        print(f"GigaChat token error: {e}")
+def call_yandexgpt(prompt, temperature=0.7, max_tokens=200, retries=3):
+    """Вызов YandexGPT API с retry логикой"""
+    import time
+    import random
+    
+    if not YANDEX_API_KEY:
+        print("[DEBUG] No YANDEX_API_KEY", flush=True)
+        return None
+    
+    url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Api-Key {YANDEX_API_KEY}'
+    }
+    
+    # Добавляем случайность в промпт для разнообразия
+    random_seed = random.randint(1, 1000)
+    enhanced_prompt = f"{prompt}\n\n[Вариация #{random_seed}]"
+    
+    payload = {
+        "modelUri": YANDEX_GPT_MODEL,
+        "completionOptions": {
+            "stream": False,
+            "temperature": min(temperature + 0.1, 1.0),  # Чуть выше температура для разнообразия
+            "maxTokens": str(max_tokens)
+        },
+        "messages": [
+            {"role": "user", "text": enhanced_prompt}
+        ]
+    }
+    
+    for attempt in range(retries):
+        try:
+            print(f"[DEBUG] YandexGPT attempt {attempt + 1}/{retries}", flush=True)
+            response = requests.post(url, headers=headers, json=payload, timeout=25)
+            print(f"[DEBUG] YandexGPT response status: {response.status_code}", flush=True)
+            
+            if response.status_code == 200:
+                result = response.json()
+                text = result['result']['alternatives'][0]['message']['text']
+                print(f"[DEBUG] YandexGPT SUCCESS: {text[:50]}...", flush=True)
+                return text
+            elif response.status_code == 429:  # Rate limit
+                print(f"[DEBUG] Rate limited, waiting...", flush=True)
+                time.sleep(2 * (attempt + 1))
+                continue
+            else:
+                print(f"[DEBUG] YandexGPT ERROR: {response.text[:200]}", flush=True)
+                if attempt < retries - 1:
+                    time.sleep(1)
+                    continue
+        except requests.exceptions.Timeout:
+            print(f"[DEBUG] Timeout on attempt {attempt + 1}", flush=True)
+            if attempt < retries - 1:
+                time.sleep(1)
+                continue
+        except Exception as e:
+            print(f"[DEBUG] YandexGPT EXCEPTION: {e}", flush=True)
+            if attempt < retries - 1:
+                time.sleep(1)
+                continue
+    
     return None
 
 
 def get_ai_recommendation(temperature, description, humidity, wind_speed):
-    """Получаем рекомендации от GigaChat AI"""
-    token = get_gigachat_token()
-    
-    if not token:
-        # Fallback рекомендации без AI
-        return get_fallback_recommendation(temperature, description)
-    
-    try:
-        url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
-        headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': f'Bearer {token}'
-        }
-        
-        prompt = f"""Ты персональный стилист для девушки. Погода сейчас: температура {temperature}°C, {description}, влажность {humidity}%, ветер {wind_speed} м/с.
+    """Получаем рекомендации от YandexGPT AI"""
+    prompt = f"""Ты персональный стилист для девушки. Погода сейчас: температура {temperature}°C, {description}, влажность {humidity}%, ветер {wind_speed} м/с.
         
 Дай краткую стильную рекомендацию по одежде (2-3 предложения). Используй эмодзи. Будь дружелюбной и современной. Предложи конкретные вещи и цвета."""
 
-        payload = {
-            "model": "GigaChat",
-            "messages": [
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.7,
-            "max_tokens": 200
-        }
-        
-        response = requests.post(url, headers=headers, json=payload, verify=False, timeout=15)
-        
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content']
-    except Exception as e:
-        print(f"GigaChat API error: {e}")
+    result = call_yandexgpt(prompt, temperature=0.7, max_tokens=200)
+    if result:
+        return result
     
     return get_fallback_recommendation(temperature, description)
 
@@ -112,74 +216,57 @@ def get_fallback_recommendation(temperature, description):
     return base
 
 
-def get_health_tips(temperature, description, magnetic_level):
-    """Получаем советы по здоровью для детей от GigaChat"""
-    token = get_gigachat_token()
-    
-    if not token:
-        return get_fallback_health_tips(temperature, description, magnetic_level)
-    
-    try:
-        url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
-        headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': f'Bearer {token}'
-        }
+def get_combined_advice(temperature, description, wind_speed, humidity, magnetic_level):
+    """Получаем объединенный совет (здоровье + стиль) от YandexGPT"""
+    prompt = f"""Ты добрый помощник для маленьких детей. Погода: {temperature}°C, {description}, ветер {wind_speed} м/с, влажность {humidity}%. Магнитная обстановка: {magnetic_level}.
         
-        prompt = f"""Ты детский врач-педиатр. Погода сейчас: {temperature}°C, {description}. Магнитная активность: {magnetic_level}.
-
-Дай 3 коротких полезных совета для детей по здоровью на сегодня с учетом погоды. Используй эмодзи. Будь дружелюбным и понятным для детей. Каждый совет — одно предложение."""
-
-        payload = {
-            "model": "GigaChat",
-            "messages": [
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.7,
-            "max_tokens": 250
-        }
+        Придумай ОДИН короткий и веселый совет, который объединяет:
+        1. Что лучше надеть (стиль).
+        2. Как сберечь здоровье (здоровье).
         
-        response = requests.post(url, headers=headers, json=payload, verify=False, timeout=15)
-        
-        if response.status_code == 200:
-            result = response.json()
-            return result['choices'][0]['message']['content']
-    except Exception as e:
-        print(f"GigaChat health tips error: {e}")
+        Пиши очень просто, как для ребенка 5-7 лет. Используй смайлики. Не больше 3 предложений."""
+
+    result = call_yandexgpt(prompt, temperature=0.7, max_tokens=300)
+    if result:
+        return result
     
-    return get_fallback_health_tips(temperature, description, magnetic_level)
+    return "Сегодня отличный день! Одевайся тепло и не забывай улыбаться! ☀️"
 
 
-def get_fallback_health_tips(temperature, description, magnetic_level):
-    """Советы по здоровью без AI"""
-    tips = []
-    desc_lower = description.lower()
+def get_ai_explanation(topic):
+    """Получаем объяснение погодного или научного термина для детей"""
+    print(f"[DEBUG] get_ai_explanation called with topic: {topic}")
     
-    if temperature > 25:
-        tips.append("☀️ Пей больше воды — минимум 6-8 стаканов в день!")
-        tips.append("🧴 Наноси солнцезащитный крем перед прогулкой.")
-        tips.append("🕐 Гуляй утром или вечером, когда не так жарко.")
-    elif temperature >= 15:
-        tips.append("🚶 Отличная погода для прогулки! Проведи на улице час.")
-        tips.append("🍎 Ешь свежие фрукты и овощи для витаминов.")
-        tips.append("😴 Ложись спать вовремя — отдых важен!")
-    elif temperature >= 5:
-        tips.append("🧣 Надень шарф, чтобы не простудить горло.")
-        tips.append("🍵 Пей тёплый чай с мёдом для иммунитета.")
-        tips.append("🧤 Не забудь перчатки, если руки мёрзнут!")
-    else:
-        tips.append("❄️ Одевайся тепло — береги себя от холода!")
-        tips.append("🍊 Ешь витамин C — апельсины и лимоны.")
-        tips.append("🏠 После прогулки сразу переодевайся в сухое.")
+    prompt = f"""Ты — весёлый учитель природоведения для детей 5-8 лет. 
+
+Тема: {topic}
+
+Расскажи про это интересно и понятно:
+1. Что это такое? (простыми словами)
+2. Почему это важно знать?
+3. Интересный факт или совет!
+
+Используй много эмодзи! Пиши весело и дружелюбно, как будто разговариваешь с ребёнком. 
+Примерно 4-6 предложений. Каждый раз придумывай что-то НОВОЕ и уникальное!"""
+
+    result = call_yandexgpt(prompt, temperature=0.95, max_tokens=400)
+    if result:
+        return result
     
-    if 'дождь' in desc_lower:
-        tips[2] = "☔ Не гуляй под дождём — можно промокнуть и заболеть."
+    return f"{topic} — это очень интересно! Спроси у взрослых, они расскажут! 🤓"
+
+
+def get_clothing_history_fact():
+    """Генерирует интересный исторический факт об одежде"""
+    prompt = """Расскажи один удивительный исторический факт про какой-нибудь предмет одежды (шапку, шарф, пальто, пуговицы и т.д.) для детей. 
+        Например: откуда это взялось или из чего делали раньше. 
+        Очень кратко, увлекательно, с эмодзи."""
+
+    result = call_yandexgpt(prompt, temperature=0.8, max_tokens=200)
+    if result:
+        return result
     
-    if magnetic_level == 'high':
-        tips[0] = "💧 Пей много воды и отдыхай — сегодня магнитная буря."
-    
-    return "\n".join(tips)
+    return "Одежда имеет долгую и интересную историю! 🧵"
 
 
 def get_magnetic_storms():
@@ -271,11 +358,25 @@ def get_outfit_for_avatar(temperature, gender):
         matching.sort(key=warmth_score)
         return matching[0] if matching else None
     
-    # Выбираем по категориям в зависимости от температуры
+    # === ФИЛЬТРАЦИЯ АКСЕССУАРОВ (удаляем кольца/серьги, добавляем зонт/очки) ===
+    # Это сделано через выбор категорий. Предполагаем, что в БД есть категории "Аксессуар"
+    # Мы будем специально искать нужные аксессуары по имени или тегу, если они есть.
+    
     outfit = {}
     
+    # Вспомогательная функция для поиска конкретного аксессуара
+    def find_specific_accessory(keywords):
+        for item in items:
+            if item.get('category') == 'Аксессуар':
+                name_lower = item.get('name', '').lower()
+                if any(k in name_lower for k in keywords):
+                    return item
+        return None
+
+    pass_earrings = True # Флаг чтобы пропускать "сережки", "кольца" в общем выборе
+    
     if temperature > 25:
-        # Лето - платье или топ + шорты
+        # Лето
         if gender == 'женский':
             outfit['dress'] = filter_items('Платья', gender)
             if not outfit['dress']:
@@ -284,26 +385,46 @@ def get_outfit_for_avatar(temperature, gender):
         else:
             outfit['top'] = filter_items('Верх', gender)
             outfit['bottom'] = filter_items('Низ', gender)
+        
+        # Аксессуары для жары
+        sunglasses = find_specific_accessory(['очки', 'солнечные'])
+        if sunglasses:
+            outfit['accessory_special'] = sunglasses
+        
     elif temperature >= 15:
-        # Весна - блузка/рубашка + джинсы
+        # Весна
         outfit['top'] = filter_items('Верх', gender)
         outfit['bottom'] = filter_items('Низ', gender)
+        
     elif temperature >= 5:
-        # Осень - свитер/куртка + брюки
+        # Осень
         outfit['top'] = filter_items('Верх', gender)
         outfit['bottom'] = filter_items('Низ', gender)
         outfit['coat'] = filter_items('Верхняя одежда', gender)
+        
     else:
-        # Зима - пальто/пуховик + тёплые вещи
+        # Зима
         outfit['top'] = filter_items('Верх', gender)
         outfit['bottom'] = filter_items('Низ', gender)
         outfit['coat'] = filter_items('Верхняя одежда', gender)
         outfit['hat'] = filter_items('Головной убор', gender)
-        outfit['accessory'] = filter_items('Аксессуар', gender)
-    
+        
     # Обувь всегда
     outfit['shoes'] = filter_items('Обувь', gender)
     
+    # Дополнительные проверки на зонт (если сыро, но мы не знаем точно влажность здесь,
+    # но можно добавить рандомно или если бы передавали description. 
+    # В текущей сигнатуре description нет. Оставим просто общий аксессуар если не спец.)
+    
+    if 'accessory_special' not in outfit:
+        # Пытаемся найти общий аксессуар, но фильтруем лишнее
+        general_acc = filter_items('Аксессуар', gender)
+        if general_acc:
+            name_lower = general_acc['name'].lower()
+            bad_words = ['серьг', 'кольц', 'бусы', 'украшение']
+            if not any(bw in name_lower for bw in bad_words):
+                outfit['accessory'] = general_acc
+
     return {k: v for k, v in outfit.items() if v}  # Убираем None
 
 
@@ -327,34 +448,46 @@ def index():
     # Получаем данные о магнитных бурях
     magnetic_data = get_magnetic_storms()
     
-    # Получаем AI рекомендации и советы по здоровью
+    # Получаем AI рекомендации (объединенные)
     if weather_data and 'error' not in weather_data:
-        ai_recommendation = get_ai_recommendation(
+        # Combined advice
+        ai_recommendation = get_combined_advice(
             weather_data['temperature'],
             weather_data['description'],
+            weather_data['wind_speed'],
             weather_data['humidity'],
-            weather_data['wind_speed']
-        )
-        # Подбираем одежду из гардероба для аватаров
-        female_outfit = get_outfit_for_avatar(weather_data['temperature'], 'женский')
-        male_outfit = get_outfit_for_avatar(weather_data['temperature'], 'мужской')
-        # Получаем советы по здоровью для детей
-        health_tips = get_health_tips(
-            weather_data['temperature'],
-            weather_data['description'],
             magnetic_data['level']
         )
+        
+        # Подбираем одежду
+        female_outfit = get_outfit_for_avatar(weather_data['temperature'], 'женский')
+        male_outfit = get_outfit_for_avatar(weather_data['temperature'], 'мужской')
 
     return render_template('index.html', 
                          weather_data=weather_data, 
                          ai_recommendation=ai_recommendation,
-                         health_tips=health_tips,
+                         # health_tips удален т.к. объединен
                          city=city,
                          magnetic_level=magnetic_data['level'],
                          magnetic_text=magnetic_data['text'],
                          k_index=magnetic_data['k_index'],
                          female_outfit=female_outfit,
-                         male_outfit=male_outfit)
+                         male_outfit=male_outfit,
+                         colors=COLOR_PALETTE)  # передаем все цвета
+
+@app.route('/api/explain_term', methods=['POST'])
+def api_explain_term():
+    data = request.json
+    term = data.get('term')
+    if not term:
+        return jsonify({'error': 'No term provided'}), 400
+    explanation = get_ai_explanation(term)
+    return jsonify({'explanation': explanation})
+
+@app.route('/api/clothing_fact', methods=['POST'])
+def api_clothing_fact():
+    fact = get_clothing_history_fact()
+    return jsonify({'fact': fact})
 
 
 # ========== Wardrobe Functions ==========
@@ -398,10 +531,20 @@ def add_item():
     if request.method == 'POST':
         items = load_items()
         
+        # Получаем цвет: если выбран пользователем - используем его, иначе случайный
+        selected_color = request.form.get('color', '')
+        if selected_color:
+            color_hex = selected_color
+            color_name = get_color_by_hex(selected_color)
+        else:
+            color_hex, color_name = get_random_color()
+        
         new_item = {
             'id': get_next_id(),
             'name': request.form['name'],
             'category': request.form['category'],
+            'color': color_hex,
+            'colorName': color_name,
             'warmth': request.form['warmth'],
             'waterproof': 'waterproof' in request.form,
             'seasons': [season for season in ['лето', 'осень', 'зима', 'весна', 'межсезонье'] if season in request.form]
@@ -412,7 +555,7 @@ def add_item():
         
         return redirect(url_for('wardrobe'))
     
-    return render_template('add_item.html')
+    return render_template('add_item.html', colors=COLOR_PALETTE)
 
 @app.route('/edit_item/<int:id>', methods=['GET', 'POST'])
 def edit_item(id):
@@ -425,6 +568,13 @@ def edit_item(id):
     if request.method == 'POST':
         item['name'] = request.form['name']
         item['category'] = request.form['category']
+        
+        # Обновляем цвет
+        selected_color = request.form.get('color', '')
+        if selected_color:
+            item['color'] = selected_color
+            item['colorName'] = get_color_by_hex(selected_color)
+        
         item['warmth'] = request.form['warmth']
         item['waterproof'] = 'waterproof' in request.form
         item['seasons'] = [season for season in ['лето', 'осень', 'зима', 'весна', 'межсезонье'] if season in request.form]
@@ -432,7 +582,7 @@ def edit_item(id):
         save_items(items)
         return redirect(url_for('wardrobe'))
     
-    return render_template('edit_item.html', item=item)
+    return render_template('edit_item.html', item=item, colors=COLOR_PALETTE)
 
 if __name__ == '__main__':
     import urllib3
