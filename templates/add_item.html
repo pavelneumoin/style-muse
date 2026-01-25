@@ -52,6 +52,24 @@
                     </div>
 
                     <div class="form-field">
+                        <label>Цвет <small>(оставьте пустым для случайного)</small></label>
+                        <input type="hidden" id="color" name="color" value="">
+                        <div class="color-palette">
+                            {% for color in colors %}
+                            <button type="button" class="color-swatch-btn" data-hex="{{ color.hex }}"
+                                data-name="{{ color.name }}" style="background: {{ color.hex }};"
+                                title="{{ color.name }}">
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <div class="selected-color-info">
+                            <span id="selected-color-preview" class="color-preview"></span>
+                            <span id="selected-color-name">Случайный цвет 🎲</span>
+                            <button type="button" id="random-color-btn" class="btn btn-small">🎲 Случайный</button>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
                         <label>Теплозащита *</label>
                         <div class="radio-group">
                             <label class="radio-label">
@@ -123,6 +141,40 @@
     <footer>
         <p>✨ Style Muse — твой персональный стилист © 2026</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const colorInput = document.getElementById('color');
+            const colorPreview = document.getElementById('selected-color-preview');
+            const colorName = document.getElementById('selected-color-name');
+            const swatches = document.querySelectorAll('.color-swatch-btn');
+            const randomBtn = document.getElementById('random-color-btn');
+
+            // Обработка клика по цвету
+            swatches.forEach(swatch => {
+                swatch.addEventListener('click', function () {
+                    // Убираем выделение со всех
+                    swatches.forEach(s => s.classList.remove('selected'));
+                    // Выделяем текущий
+                    this.classList.add('selected');
+                    // Обновляем значения
+                    const hex = this.dataset.hex;
+                    const name = this.dataset.name;
+                    colorInput.value = hex;
+                    colorPreview.style.background = hex;
+                    colorName.textContent = name;
+                });
+            });
+
+            // Случайный цвет
+            randomBtn.addEventListener('click', function () {
+                swatches.forEach(s => s.classList.remove('selected'));
+                colorInput.value = '';
+                colorPreview.style.background = '';
+                colorName.textContent = 'Случайный цвет 🎲';
+            });
+        });
+    </script>
 </body>
 
 </html>
