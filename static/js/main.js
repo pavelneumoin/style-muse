@@ -193,4 +193,99 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedGender = null;
         }
     });
+
+    // === AI Question Buttons ===
+    const aiQuestionBtns = document.querySelectorAll('.ai-question-btn');
+    const mascot = document.getElementById('mascot');
+    const mascotSpeech = document.getElementById('mascot-speech');
+
+    const mascotPhrases = [
+        'Сейчас узнаю! 🔍',
+        'Отличный вопрос! ✨',
+        'Думаю... 🤔',
+        'Секундочку! ⏳',
+        'Ого, интересно! 🌟'
+    ];
+
+    aiQuestionBtns.forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const topic = btn.dataset.topic;
+            if (!topic) return;
+
+            // Проверяем кулдаун
+            if (aiCooldown) {
+                if (mascotSpeech) {
+                    mascotSpeech.textContent = 'Подожди немножко! Я отдыхаю 😴';
+                }
+                showAiModal('⏳ Подожди!', 'Пушок устал и отдыхает. Попробуй через несколько секунд! 😊');
+                return;
+            }
+
+            // Анимация маскота
+            if (mascot) {
+                mascot.style.animation = 'none';
+                mascot.offsetHeight; // Trigger reflow
+                mascot.style.animation = 'bounce 0.5s ease';
+            }
+
+            // Случайная фраза маскота
+            if (mascotSpeech) {
+                mascotSpeech.textContent = mascotPhrases[Math.floor(Math.random() * mascotPhrases.length)];
+            }
+
+            // Устанавливаем кулдаун
+            aiCooldown = true;
+            aiQuestionBtns.forEach(b => {
+                b.style.opacity = '0.5';
+                b.style.pointerEvents = 'none';
+            });
+
+            setTimeout(() => {
+                aiCooldown = false;
+                aiQuestionBtns.forEach(b => {
+                    b.style.opacity = '1';
+                    b.style.pointerEvents = 'auto';
+                });
+                if (mascotSpeech) {
+                    mascotSpeech.textContent = 'Спроси меня ещё! 🌈';
+                }
+            }, COOLDOWN_TIME);
+
+            showAiModal('☁️ Пушок думает...', 'Секунду, спрашиваю у умной нейросети...');
+
+            try {
+                const response = await fetch('/api/explain_term', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ term: topic })
+                });
+
+                const data = await response.json();
+
+                if (data.explanation) {
+                    showAiModal('🎓 Пушок говорит:', data.explanation);
+                    if (mascotSpeech) {
+                        mascotSpeech.textContent = 'Вот что я узнал! 🎉';
+                    }
+                } else {
+                    showAiModal('😅 Упс', 'Не удалось получить ответ. Попробуй ещё раз!');
+                    if (mascotSpeech) {
+                        mascotSpeech.textContent = 'Что-то пошло не так... 😕';
+                    }
+                }
+            } catch (e) {
+                showAiModal('❌ Ошибка', 'Проблема с подключением. Проверь интернет!');
+                if (mascotSpeech) {
+                    mascotSpeech.textContent = 'Нет связи с интернетом 📡';
+                }
+            }
+        });
+    });
+
+    // Восстанавливаем анимацию маскота
+    if (mascot) {
+        mascot.addEventListener('animationend', () => {
+            mascot.style.animation = 'float 3s ease-in-out infinite';
+        });
+    }
 });

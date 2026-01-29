@@ -1,5 +1,5 @@
-/* Style Muse - Clean Minimalist */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Детский Погодник - Яркий детский стиль */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
 * {
     box-sizing: border-box;
@@ -9,28 +9,29 @@
 
 :root {
     --white: #ffffff;
-    --gray-50: #f9fafb;
+    --pink: #ff6b9d;
+    --purple: #a855f7;
+    --blue: #3b82f6;
+    --cyan: #06b6d4;
+    --yellow: #fbbf24;
+    --green: #22c55e;
+    --orange: #f97316;
     --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-400: #9ca3af;
     --gray-500: #6b7280;
     --gray-700: #374151;
     --gray-800: #1f2937;
-    --gray-900: #111827;
-    --primary: #3b82f6;
-    --primary-dark: #2563eb;
-    --accent: #10b981;
-    --radius: 16px;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --radius: 24px;
+    --shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
+    --shadow-lg: 0 8px 30px rgba(168, 85, 247, 0.25);
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background: var(--gray-100);
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 50%, #fef3c7 100%);
     color: var(--gray-800);
-    line-height: 1.5;
+    line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* Weather Bar */
@@ -470,5 +471,331 @@ body {
     .color-btn {
         width: 42px;
         height: 42px;
+    }
+}
+
+/* ========== Маскот Пушок ========== */
+.mascot-section {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.mascot-container {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+.mascot-svg {
+    width: 120px;
+    height: 100px;
+    filter: drop-shadow(0 8px 20px rgba(147, 197, 253, 0.5));
+}
+
+.mascot-speech {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 16px 24px;
+    margin-top: 12px;
+    box-shadow: var(--shadow);
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--purple);
+}
+
+.mascot-speech::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid var(--white);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* ========== AI Кнопки ========== */
+.ai-buttons-section {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin: 24px 0;
+    box-shadow: var(--shadow-lg);
+}
+
+.ai-buttons-title {
+    color: var(--white);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.ai-buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.ai-question-btn {
+    background: var(--white);
+    border: none;
+    border-radius: 16px;
+    padding: 18px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ai-question-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.ai-question-btn:active {
+    transform: scale(0.98);
+}
+
+.ai-question-btn .emoji {
+    font-size: 24px;
+}
+
+.ai-question-btn.weather {
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+}
+
+.ai-question-btn.clothing {
+    background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+}
+
+.ai-question-btn.fact {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
+
+.ai-question-btn.why {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+}
+
+/* ========== Плавающие облака (фон) ========== */
+.floating-clouds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: cloudFloat 20s linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+}
+
+.cloud-1 {
+    width: 100px;
+    height: 40px;
+    top: 10%;
+    left: -100px;
+    animation-duration: 25s;
+}
+
+.cloud-2 {
+    width: 80px;
+    height: 32px;
+    top: 30%;
+    left: -80px;
+    animation-duration: 30s;
+    animation-delay: 5s;
+}
+
+.cloud-3 {
+    width: 120px;
+    height: 48px;
+    top: 60%;
+    left: -120px;
+    animation-duration: 35s;
+    animation-delay: 10s;
+}
+
+@keyframes cloudFloat {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(100vw + 150px));
+    }
+}
+
+/* ========== Обновленные карточки ========== */
+.info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.info-card.advice {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-color: #86efac;
+}
+
+.info-card.fact {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #fcd34d;
+}
+
+/* Weather bar детский стиль */
+.weather-bar {
+    background: linear-gradient(135deg, var(--white) 0%, #f0f9ff 100%);
+    border-bottom: 3px solid var(--cyan);
+    border-radius: 0 0 30px 30px;
+}
+
+.stat {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-radius: 16px;
+    border: 2px solid var(--cyan);
+}
+
+.stat:hover {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    border-color: var(--blue);
+}
+
+/* Search детский стиль */
+.search-form {
+    background: var(--white);
+    border: 3px solid var(--purple);
+    border-radius: 50px;
+}
+
+.search-form button {
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    font-weight: 700;
+}
+
+.search-form button:hover {
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+}
+
+/* Avatars детский стиль */
+.avatar-card {
+    border: 3px solid var(--pink);
+    border-radius: var(--radius);
+}
+
+.avatar-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.avatars-section h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--purple);
+}
+
+/* Кнопка цветов детский стиль */
+.btn-colors {
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    color: var(--gray-800);
+    font-weight: 800;
+    border: 3px solid var(--orange);
+}
+
+.btn-colors:hover {
+    background: linear-gradient(135deg, var(--orange), var(--pink));
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* Modal детский стиль */
+.modal {
+    border: 4px solid var(--purple);
+    border-radius: 30px;
+}
+
+.modal h3 {
+    color: var(--purple);
+    font-weight: 800;
+}
+
+.btn-close {
+    background: linear-gradient(135deg, var(--green), #16a34a);
+    color: white;
+    font-weight: 700;
+    border-radius: 50px;
+}
+
+.btn-close:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+/* Responsive для AI кнопок */
+@media (max-width: 768px) {
+    .ai-buttons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mascot-svg {
+        width: 100px;
+        height: 80px;
+    }
+
+    .mascot-speech {
+        font-size: 16px;
+        padding: 12px 18px;
     }
 }

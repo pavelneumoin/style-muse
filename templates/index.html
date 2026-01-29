@@ -11,6 +11,41 @@
 </head>
 
 <body>
+    <!-- Плавающие облака на фоне -->
+    <div class="floating-clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+    </div>
+
+    <!-- Маскот Пушок -->
+    <div class="mascot-section">
+        <div class="mascot-container" id="mascot">
+            <svg class="mascot-svg" viewBox="0 0 120 80">
+                <!-- Облачко -->
+                <ellipse cx="60" cy="50" rx="50" ry="25" fill="#fff" />
+                <circle cx="30" cy="45" r="20" fill="#fff" />
+                <circle cx="90" cy="45" r="18" fill="#fff" />
+                <circle cx="45" cy="30" r="18" fill="#fff" />
+                <circle cx="75" cy="28" r="20" fill="#fff" />
+                <circle cx="60" cy="25" r="16" fill="#fff" />
+                <!-- Глазки -->
+                <ellipse cx="45" cy="50" rx="6" ry="8" fill="#333" />
+                <ellipse cx="75" cy="50" rx="6" ry="8" fill="#333" />
+                <circle cx="47" cy="48" r="2" fill="#fff" />
+                <circle cx="77" cy="48" r="2" fill="#fff" />
+                <!-- Улыбка -->
+                <path d="M50 62 Q60 72 70 62" stroke="#ff6b9d" stroke-width="3" fill="none" stroke-linecap="round" />
+                <!-- Румянец -->
+                <ellipse cx="35" cy="58" rx="6" ry="4" fill="#ffb6c1" opacity="0.6" />
+                <ellipse cx="85" cy="58" rx="6" ry="4" fill="#ffb6c1" opacity="0.6" />
+            </svg>
+        </div>
+        <div class="mascot-speech" id="mascot-speech">
+            Привет! Я Пушок! ☁️ Давай узнаем погоду!
+        </div>
+    </div>
+
     <!-- Weather Bar -->
     {% if weather_data and not weather_data.error %}
     <div class="weather-bar">
@@ -264,6 +299,32 @@
         <div class="color-section">
             <button class="btn-colors" id="open-colors">🎨 Выбрать цвет для одежды</button>
             <p id="selected-item-hint" style="display:none;">Сначала нажми на элемент одежды на аватаре!</p>
+        </div>
+
+        <!-- AI Кнопки для вопросов -->
+        <div class="ai-buttons-section">
+            <h3 class="ai-buttons-title">🌈 Спроси у Пушка!</h3>
+            <div class="ai-buttons-grid">
+                <button class="ai-question-btn weather"
+                    data-topic="погода сегодня, почему такая температура и что это значит для прогулки">
+                    <span class="emoji">🌤️</span>
+                    <span>Расскажи про погоду!</span>
+                </button>
+                <button class="ai-question-btn clothing"
+                    data-topic="что лучше надеть ребенку в такую погоду и почему это важно">
+                    <span class="emoji">👕</span>
+                    <span>Что надеть сегодня?</span>
+                </button>
+                <button class="ai-question-btn fact"
+                    data-topic="интересный и удивительный факт о природе, животных или науке для детей">
+                    <span class="emoji">📚</span>
+                    <span>Интересный факт!</span>
+                </button>
+                <button class="ai-question-btn why" data-topic="почему небо голубое, простое объяснение для ребенка">
+                    <span class="emoji">🤔</span>
+                    <span>Почему небо голубое?</span>
+                </button>
+            </div>
         </div>
 
         <!-- Info Cards -->
