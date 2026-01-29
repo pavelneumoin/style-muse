@@ -1,5 +1,5 @@
 # Environment variables (contains secrets!)
-# .env  # ВРЕМЕННО ЗАКОММЕНТИРОВАНО для загрузки на Render
+.env
 
 # Python
 __pycache__/
