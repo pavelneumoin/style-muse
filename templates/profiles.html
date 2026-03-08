@@ -61,34 +61,116 @@
         }
 
         .new-profile-form {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            max-width: 400px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 2.5rem 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            max-width: 420px;
             width: 100%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .new-profile-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
         }
 
         .new-profile-form h3 {
             margin-top: 0;
-            color: #FF69B4;
+            color: #d63384;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .input-group {
             margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            font-size: 1rem;
+            color: #495057;
+            background-color: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #FF69B4;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .input-field::placeholder {
+            color: #adb5bd;
+        }
+
+        select.input-field {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        .avatar-title {
+            display: block;
+            text-align: center;
+            font-weight: 800;
+            color: #495057;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
 
         .avatar-options {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
-            margin: 1rem 0;
+            margin-bottom: 1.5rem;
         }
 
         .avatar-label {
             font-size: 2.5rem;
             cursor: pointer;
             padding: 0.5rem;
-            border-radius: 15px;
-            transition: all 0.2s;
-            border: 2px solid transparent;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid transparent;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .avatar-label:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            background: #fff;
         }
 
         .avatar-input[type="radio"] {
@@ -98,41 +180,71 @@
         .avatar-input[type="radio"]:checked+.avatar-label {
             border-color: #FF69B4;
             background: rgba(255, 105, 180, 0.1);
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.2);
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #FF69B4, #d63384);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            box-shadow: 0 10px 20px rgba(214, 51, 132, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(214, 51, 132, 0.4);
+            background: linear-gradient(135deg, #ff7ebf, #e83e8c);
+        }
+
+        .generate-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 10px rgba(214, 51, 132, 0.3);
         }
     </style>
 </head>
 
 <body class="bg-gradient">
     <div class="container profiles-container">
-        <h1 style="color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 0;">Добро пожаловать в Style
-            Muse! ✨</h1>
-        <p style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 1.2rem; margin-top: 0;">Твой
-            персональный погодный стилист</p>
+        <h1
+            style="color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-bottom: 0; font-size: 3rem; letter-spacing: -1px;">
+            Style Muse ✨</h1>
+        <p
+            style="color: rgba(255,255,255,0.9); font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.1); font-size: 1.3rem; margin-top: 5px; margin-bottom: 2rem;">
+            Твой персональный погодный стилист</p>
 
         <div class="new-profile-form">
             <h3>Создай свой профиль</h3>
             <form method="POST" action="/style-muse/profiles">
                 <input type="hidden" name="action" value="create">
 
-                <div class="input-group" style="margin-bottom: 1.5rem;">
-                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom: 0.5rem;">Как тебя
-                        зовут?</label>
-                    <input type="text" name="name" class="input-field" placeholder="Имя" required>
+                <div class="input-group">
+                    <label>Как тебя зовут?</label>
+                    <input type="text" name="name" class="input-field" placeholder="Например: Соня" required
+                        autocomplete="off">
                 </div>
 
-                <div class="input-group" style="margin-bottom: 1.5rem;">
-                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom: 0.5rem;">Для кого
-                        подбирать одежду?</label>
+                <div class="input-group">
+                    <label>Твой стиль в одежде?</label>
                     <select name="gender" class="input-field">
-                        <option value="унисекс">Для всех</option>
+                        <option value="унисекс">Универсальный (Для всех)</option>
                         <option value="мужской">Мальчик</option>
                         <option value="женский">Девочка</option>
                     </select>
                 </div>
 
-                <div class="input-group">
-                    <label style="display:block; text-align:center; font-weight:bold; margin-bottom: 0.5rem;">Выбери
-                        аватарку:</label>
+                <div class="input-group" style="margin-top: 2rem;">
+                    <span class="avatar-title">Выбери аватара-помощника:</span>
                     <div class="avatar-options">
                         <label>
                             <input type="radio" class="avatar-input" name="avatar" value="👦" checked>
@@ -153,7 +265,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="generate-btn" style="width: 100%; margin-top: 1rem;">Начать!</button>
+                <button type="submit" class="generate-btn">Подобрать Образ!</button>
             </form>
         </div>
     </div>
