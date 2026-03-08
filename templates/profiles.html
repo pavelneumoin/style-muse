@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кто ты? - Style Muse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .profiles-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            gap: 2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .profiles-list {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.4);
+            border: 3px solid white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            width: 150px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #FF69B4;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+        }
+
+        .profile-avatar {
+            font-size: 4rem;
+        }
+
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .new-profile-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .new-profile-form h3 {
+            margin-top: 0;
+            color: #FF69B4;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .avatar-label {
+            font-size: 2.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 15px;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .avatar-input[type="radio"] {
+            display: none;
+        }
+
+        .avatar-input[type="radio"]:checked+.avatar-label {
+            border-color: #FF69B4;
+            background: rgba(255, 105, 180, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient">
+    <div class="container profiles-container">
+        <h1 style="color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 0;">Добро пожаловать в Style
+            Muse! ✨</h1>
+        <p style="color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.1); font-size: 1.2rem; margin-top: 0;">Твой
+            персональный погодный стилист</p>
+
+        <div class="new-profile-form">
+            <h3>Создай свой профиль</h3>
+            <form method="POST" action="/style-muse/profiles">
+                <input type="hidden" name="action" value="create">
+
+                <div class="input-group" style="margin-bottom: 1.5rem;">
+                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom: 0.5rem;">Как тебя
+                        зовут?</label>
+                    <input type="text" name="name" class="input-field" placeholder="Имя" required>
+                </div>
+
+                <div class="input-group" style="margin-bottom: 1.5rem;">
+                    <label style="display:block; text-align:left; font-weight:bold; margin-bottom: 0.5rem;">Для кого
+                        подбирать одежду?</label>
+                    <select name="gender" class="input-field">
+                        <option value="унисекс">Для всех</option>
+                        <option value="мужской">Мальчик</option>
+                        <option value="женский">Девочка</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label style="display:block; text-align:center; font-weight:bold; margin-bottom: 0.5rem;">Выбери
+                        аватарку:</label>
+                    <div class="avatar-options">
+                        <label>
+                            <input type="radio" class="avatar-input" name="avatar" value="👦" checked>
+                            <div class="avatar-label">👦</div>
+                        </label>
+                        <label>
+                            <input type="radio" class="avatar-input" name="avatar" value="👧">
+                            <div class="avatar-label">👧</div>
+                        </label>
+                        <label>
+                            <input type="radio" class="avatar-input" name="avatar" value="🦊">
+                            <div class="avatar-label">🦊</div>
+                        </label>
+                        <label>
+                            <input type="radio" class="avatar-input" name="avatar" value="🐱">
+                            <div class="avatar-label">🐱</div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="generate-btn" style="width: 100%; margin-top: 1rem;">Начать!</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
