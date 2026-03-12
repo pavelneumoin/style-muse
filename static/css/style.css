@@ -9,20 +9,28 @@
 
 :root {
     --white: #ffffff;
-    --pink: #ff6b9d;
-    --purple: #a855f7;
-    --blue: #3b82f6;
-    --cyan: #06b6d4;
-    --yellow: #fbbf24;
-    --green: #22c55e;
-    --orange: #f97316;
-    --gray-100: #f3f4f6;
-    --gray-500: #6b7280;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --radius: 24px;
-    --shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
-    --shadow-lg: 0 8px 30px rgba(168, 85, 247, 0.25);
+    --pink: #ff8ab6;
+    /* Pastel pink */
+    --purple: #b070f8;
+    /* Soft purple */
+    --blue: #70b3ff;
+    /* Sky blue */
+    --cyan: #4ce1f7;
+    --yellow: #ffdb58;
+    /* Butter yellow */
+    --green: #5ee68c;
+    /* Minty green */
+    --orange: #ffaa55;
+    --gray-100: #f4f6f8;
+    --gray-500: #8898aa;
+    --gray-700: #475569;
+    --gray-800: #334155;
+    --radius: 36px;
+    /* Very round */
+    --shadow: 0 8px 25px rgba(176, 112, 248, 0.15);
+    --shadow-lg: 0 12px 35px rgba(176, 112, 248, 0.25);
+    --btn-shadow: 0 6px 0px rgba(176, 112, 248, 0.3);
+    /* 3D effect for buttons */
 }
 
 body {
@@ -899,74 +907,207 @@ body {
 .profile-link-btn.danger:hover {
     background: #fee2e2;
     border-color: #fecaca;
-/* ================================
+
+    /* ================================
    Search Bar Refactored Styles
    ================================ */
-.search-form-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    .search-form-container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .search-form.main-search {
+        flex-grow: 1;
+        margin: 0;
+        max-width: 600px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        background: var(--white);
+        border: 3px solid var(--purple);
+        border-radius: 50px;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .search-input {
+        flex-grow: 1;
+        min-width: 200px;
+        border: none;
+        outline: none;
+        padding: 12px 20px;
+        font-size: 15px;
+        background: transparent;
+    }
+
+    .btn-search {
+        min-width: 100px;
+        background: linear-gradient(135deg, var(--purple), var(--pink));
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-weight: 700;
+        cursor: pointer;
+        border-radius: 0;
+        transition: background 0.3s;
+        margin: 0;
+    }
+
+    .search-form.tomorrow-search {
+        margin: 0;
+        display: flex;
+    }
+
+    .btn-tomorrow {
+        background: linear-gradient(135deg, var(--teal), #2dd4bf);
+        color: white;
+        border: none;
+        font-weight: 700;
+        padding: 12px 24px;
+        border-radius: 50px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.3s;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .btn-search:hover,
+    .btn-tomorrow:hover {
+        filter: brightness(1.1);
+    }
 }
 
-.search-form.main-search {
-    flex-grow: 1;
-    margin: 0;
-    max-width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
+/* Close media query max-width 768px */
+
+/* ================================
+   Kids-focused Animations & Classes
+   ================================ */
+
+.bouncy {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bouncy:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: var(--btn-shadow);
+}
+
+.bouncy:active {
+    transform: scale(0.95);
+}
+
+.hidden-clothing {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8) translateY(-10px);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.show-clothing {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+/* Jiggle effect for clicked clothes */
+@keyframes jiggle {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.1) rotate(-5deg);
+    }
+
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    75% {
+        transform: scale(1.1) rotate(-5deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.jiggling {
+    animation: jiggle 0.5s ease-in-out;
+}
+
+/* Big "Давай одеваться!" button styles */
+.dress-up-btn {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    background: linear-gradient(135deg, var(--green), #3bcf72);
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 16px 20px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    box-shadow: 0 8px 0 #2ea155;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dress-up-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 0 #2ea155;
+}
+
+.dress-up-btn:active {
+    transform: translateY(6px);
+    box-shadow: 0 2px 0 #2ea155;
+}
+
+/* Educational Speech Bubbles near Avatars */
+.educational-bubble {
+    position: absolute;
+    top: 20%;
+    right: -10px;
     background: var(--white);
-    border: 3px solid var(--purple);
-    border-radius: 50px;
-    overflow: hidden;
-    padding: 0;
-}
-
-.search-input {
-    flex-grow: 1;
-    min-width: 200px;
-    border: none;
-    outline: none;
-    padding: 12px 20px;
+    border: 3px solid var(--pink);
+    border-radius: 20px;
+    padding: 12px 18px;
     font-size: 15px;
-    background: transparent;
-}
-
-.btn-search {
-    min-width: 100px;
-    background: linear-gradient(135deg, var(--purple), var(--pink));
-    color: white;
-    border: none;
-    padding: 12px 24px;
     font-weight: 700;
-    cursor: pointer;
-    border-radius: 0;
-    transition: background 0.3s;
-    margin: 0;
+    color: var(--purple);
+    box-shadow: var(--shadow);
+    max-width: 140px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+    pointer-events: none;
 }
 
-.search-form.tomorrow-search {
-    margin: 0;
-    display: flex;
+.educational-bubble.show {
+    opacity: 1;
+    transform: scale(1);
 }
 
-.btn-tomorrow {
-    background: linear-gradient(135deg, var(--teal), #2dd4bf);
-    color: white;
-    border: none;
-    font-weight: 700;
-    padding: 12px 24px;
-    border-radius: 50px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.3s;
-    height: 100%;
-    box-sizing: border-box;
+.educational-bubble::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -12px;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 12px solid var(--pink);
 }
 
-.btn-search:hover,
-.btn-tomorrow:hover {
-    filter: brightness(1.1);
+.avatar-card {
+    position: relative;
+    box-shadow: var(--shadow);
+    border: 4px solid var(--white);
 }

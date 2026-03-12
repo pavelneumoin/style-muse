@@ -1,5 +1,107 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // === Kids Interactive Dressing Logic ===
+    const clothingOrder = {
+        'top': 1, 'bottom': 1, 'dress': 1,
+        'shoes': 2,
+        'coat': 3,
+        'scarf': 4,
+        'hat': 5, 'gloves': 5,
+        'umbrella': 6, 'sunglasses': 6
+    };
+
+    const dressingMessages = {
+        'top': 'Сначала надеваем кофточку!',
+        'bottom': 'Теперь штанишки - грей ножки!',
+        'dress': 'Надеваем красивое платье!',
+        'shoes': 'Обуваем ботинки для прогулки!',
+        'coat': 'Куртка согреет от ветра!',
+        'scarf': 'Шарфик бережет горло!',
+        'hat': 'Шапка прячет ушки от холода!',
+        'gloves': 'Перчатки греют ручки!',
+        'umbrella': 'Берем зонт от дождя!',
+        'sunglasses': 'Очки от яркого солнышка!'
+    };
+
+    // Hide all clothing initially
+    const allClothingItems = document.querySelectorAll('.clothing-item');
+    allClothingItems.forEach(el => el.classList.add('hidden-clothing'));
+
+    window.startDressing = function (gender) {
+        const avatarContainer = document.getElementById(`${gender}-avatar`);
+        if (!avatarContainer) return;
+
+        const btn = document.querySelector(`#${gender}-avatar-card .dress-up-btn`);
+        if (btn) {
+            btn.style.transform = 'scale(0)';
+            setTimeout(() => btn.style.display = 'none', 300);
+        }
+
+        const bubble = document.getElementById(`${gender}-bubble`);
+
+        const items = Array.from(avatarContainer.querySelectorAll('.hidden-clothing'));
+
+        const layers = {};
+        items.forEach(item => {
+            const type = item.dataset.item;
+            const layerNum = clothingOrder[type] || 99;
+            if (!layers[layerNum]) layers[layerNum] = [];
+            layers[layerNum].push(item);
+        });
+
+        const sortedLayers = Object.keys(layers).sort((a, b) => a - b);
+        let currentStep = 0;
+
+        function showNextLayer() {
+            if (currentStep >= sortedLayers.length) {
+                if (bubble) {
+                    bubble.textContent = 'Готово! Мы оделись! 🎉';
+                    setTimeout(() => bubble.classList.remove('show'), 3000);
+                }
+                return;
+            }
+
+            const layerIdx = sortedLayers[currentStep];
+            const currentItems = layers[layerIdx];
+
+            let typeName = '';
+            currentItems.forEach(el => {
+                el.classList.remove('hidden-clothing');
+                el.classList.add('show-clothing');
+                if (!typeName) typeName = el.dataset.item;
+            });
+
+            if (bubble && typeName) {
+                bubble.textContent = dressingMessages[typeName] || 'Надеваем это!';
+                bubble.classList.add('show');
+            }
+
+            currentStep++;
+            setTimeout(showNextLayer, 1800);
+        }
+
+        showNextLayer();
+    };
+
+    // Jiggle on click
+    allClothingItems.forEach(item => {
+        item.addEventListener('mousedown', function (e) {
+            if (this.classList.contains('show-clothing') || !this.classList.contains('hidden-clothing')) {
+                this.classList.add('jiggling');
+                setTimeout(() => this.classList.remove('jiggling'), 500);
+
+                const typeName = this.dataset.item;
+                const gender = this.dataset.gender;
+                const bubble = document.getElementById(`${gender}-bubble`);
+                if (bubble && typeName) {
+                    bubble.textContent = dressingMessages[typeName] || 'Ой, щекотно! 😄';
+                    bubble.classList.add('show');
+                    setTimeout(() => bubble.classList.remove('show'), 2000);
+                }
+            }
+        });
+    });
+
     // === State ===
     let selectedItem = null;
     let selectedGender = null;
