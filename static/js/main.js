@@ -164,6 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }, COOLDOWN_TIME);
 
             showAiModal('🤖 Загружаю...', 'Секунду, спрашиваю у умной нейросети...');
+            const mascot = document.getElementById('mascot');
+            if (mascot) mascot.classList.add('mascot-thinking');
 
             try {
                 const response = await fetch('/api/explain_term', {
@@ -176,11 +178,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (data.explanation) {
                     showAiModal('🎓 Интересно!', data.explanation);
+                    playTTS(data.explanation);
                 } else {
                     showAiModal('😅 Упс', 'Не удалось получить ответ. Попробуй ещё раз!');
                 }
             } catch (e) {
                 showAiModal('❌ Ошибка', 'Проблема с подключением. Проверь интернет!');
+            } finally {
+                if (mascot) mascot.classList.remove('mascot-thinking');
             }
         });
     });
@@ -193,6 +198,32 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedGender = null;
         }
     });
+
+    // === TTS Playback ===
+    async function playTTS(text) {
+        try {
+            const response = await fetch('/api/tts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text })
+            });
+            const data = await response.json();
+            if (data.audio_base64) {
+                const audio = new Audio("data:audio/mp3;base64," + data.audio_base64);
+                audio.play();
+            }
+        } catch (e) {
+            console.error("TTS playback failed:", e);
+        }
+    }
+
+    const playAdviceBtn = document.getElementById('play-advice-btn');
+    const mainAdviceText = document.getElementById('main-advice-text');
+    if (playAdviceBtn && mainAdviceText) {
+        playAdviceBtn.addEventListener('click', () => {
+            playTTS(mainAdviceText.textContent);
+        });
+    }
 
     // === AI Question Buttons ===
     const aiQuestionBtns = document.querySelectorAll('.ai-question-btn');
@@ -252,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, COOLDOWN_TIME);
 
             showAiModal('☁️ Пушок думает...', 'Секунду, спрашиваю у умной нейросети...');
+            if (mascot) mascot.classList.add('mascot-thinking');
 
             try {
                 const response = await fetch('/api/explain_term', {
@@ -264,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (data.explanation) {
                     showAiModal('🎓 Пушок говорит:', data.explanation);
+                    playTTS(data.explanation);
                     if (mascotSpeech) {
                         mascotSpeech.textContent = 'Вот что я узнал! 🎉';
                     }
@@ -278,14 +311,186 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (mascotSpeech) {
                     mascotSpeech.textContent = 'Нет связи с интернетом 📡';
                 }
+            } finally {
+                if (mascot) mascot.classList.remove('mascot-thinking');
             }
         });
     });
 
-    // Восстанавливаем анимацию маскота
+    // Восстанавливаем CSS анимацию маскота
     if (mascot) {
-        mascot.addEventListener('animationend', () => {
-            mascot.style.animation = 'float 3s ease-in-out infinite';
+        mascot.addEventListener('animationend', (e) => {
+            if (e.animationName === 'bounce') {
+                mascot.style.animation = ''; // Убираем инлайновый стиль, чтобы работали классы
+            }
         });
     }
+
+    // === STT / Mic Logic ===
+    const micBtn = document.getElementById('mic-btn');
+    const micStatus = document.getElementById('mic-status');
+    const micResult = document.getElementById('mic-result');
+    let mediaRecorder = null;
+    let audioChunks = [];
+
+    if (micBtn) {
+        micBtn.addEventListener('mousedown', startRecording);
+        micBtn.addEventListener('mouseup', stopRecording);
+        micBtn.addEventListener('mouseleave', stopRecording);
+
+        micBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startRecording(); });
+        micBtn.addEventListener('touchend', stopRecording);
+        micBtn.addEventListener('touchcancel', stopRecording);
+    }
+
+    async function startRecording() {
+        if (mediaRecorder && mediaRecorder.state === 'recording') return;
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = event => {
+                if (event.data.size > 0) audioChunks.push(event.data);
+            };
+
+            mediaRecorder.start();
+            if (micStatus) {
+                micStatus.textContent = 'Слушаю... Говори! 🔴';
+                micStatus.style.display = 'block';
+            }
+            if (micResult) micResult.style.display = 'none';
+            micBtn.style.transform = 'scale(1.1)';
+            micBtn.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.6)';
+        } catch (err) {
+            console.error("Mic access error:", err);
+            alert("Нет доступа к микрофону! Проверьте разрешения браузера.");
+        }
+    }
+
+    async function stopRecording() {
+        if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
+
+        mediaRecorder.onstop = async () => {
+            if (micStatus) {
+                micStatus.textContent = 'Распознаю... ⏳';
+            }
+            micBtn.style.transform = 'scale(1)';
+            micBtn.style.boxShadow = '0 4px 15px rgba(255,105,180,0.3)';
+
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'speech.webm');
+
+            try {
+                const resp = await fetch('/api/stt', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                if (micStatus) micStatus.style.display = 'none';
+
+                if (data.text) {
+                    if (micResult) {
+                        micResult.textContent = '🗣️ "' + data.text + '"';
+                        micResult.style.display = 'block';
+                        setTimeout(() => micResult.style.display = 'none', 5000);
+                    }
+                    askMascotVoice(data.text);
+                } else {
+                    if (micResult) {
+                        micResult.textContent = 'Ничего не расслышал 😔';
+                        micResult.style.display = 'block';
+                        setTimeout(() => micResult.style.display = 'none', 3000);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+                if (micStatus) micStatus.style.display = 'none';
+            }
+
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorder.stop();
+    }
+
+    function askMascotVoice(questionText) {
+        if (mascotSpeech) {
+            mascotSpeech.textContent = 'Думаю над вопросом... 🤔';
+        }
+        if (mascot) mascot.classList.add('mascot-thinking');
+
+        showAiModal('☁️ Пушок думает...', 'Секунду, спрашиваю у умной нейросети: "' + questionText + '"');
+
+        const mascotPrompt = "Очень коротко ответь на вопрос ребенка (1-2 предложения, просто и весело): " + questionText;
+
+        fetch('/api/explain_term', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ term: mascotPrompt })
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.explanation) {
+                    showAiModal('🎓 Пушок говорит:', data.explanation);
+                    playTTS(data.explanation);
+                    if (mascotSpeech) {
+                        mascotSpeech.textContent = 'Вот что я узнал! 🎉';
+                    }
+                } else {
+                    showAiModal('😅 Упс', 'Не удалось получить ответ. Попробуй ещё раз!');
+                    if (mascotSpeech) {
+                        mascotSpeech.textContent = 'Что-то пошло не так... 😕';
+                    }
+                }
+            })
+            .catch(err => {
+                showAiModal('❌ Ошибка', 'Проблема с подключением.');
+                console.error(err);
+            })
+            .finally(() => {
+                if (mascot) mascot.classList.remove('mascot-thinking');
+            });
+    }
+
+    // Listeners for coloring button
+    const makeColoringBtn = document.getElementById('make-coloring-btn');
+    const coloringResult = document.getElementById('coloring-result');
+    const coloringImg = document.getElementById('coloring-img');
+
+    if (makeColoringBtn) {
+        makeColoringBtn.addEventListener('click', async () => {
+            const outfit = makeColoringBtn.dataset.outfit || '';
+
+            makeColoringBtn.disabled = true;
+            makeColoringBtn.innerHTML = '⏳ Рисую контуры...';
+
+            try {
+                const resp = await fetch('/api/generate_coloring', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ outfit: outfit })
+                });
+                const data = await resp.json();
+
+                if (data.image_base64) {
+                    makeColoringBtn.style.display = 'none';
+                    coloringImg.src = "data:image/jpeg;base64," + data.image_base64;
+                    coloringResult.style.display = 'block';
+                } else {
+                    alert('Не удалось создать раскраску 😢');
+                    makeColoringBtn.disabled = false;
+                    makeColoringBtn.innerHTML = '🖍️ Сделать раскраску';
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Ошибка сети');
+                makeColoringBtn.disabled = false;
+                makeColoringBtn.innerHTML = '🖍️ Сделать раскраску';
+            }
+        });
+    }
+
 });

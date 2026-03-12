@@ -1,0 +1,71 @@
+/* ================================
+   Search Bar Refactored Styles
+   ================================ */
+.search-form-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.search-form.main-search {
+    flex-grow: 1;
+    margin: 0;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    background: var(--white);
+    border: 3px solid var(--purple);
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.search-input {
+    flex-grow: 1;
+    min-width: 200px;
+    border: none;
+    outline: none;
+    padding: 12px 20px;
+    font-size: 15px;
+    background: transparent;
+}
+
+.btn-search {
+    min-width: 100px;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.3s;
+    margin: 0;
+}
+
+.search-form.tomorrow-search {
+    margin: 0;
+    display: flex;
+}
+
+.btn-tomorrow {
+    background: linear-gradient(135deg, var(--teal), #2dd4bf);
+    color: white;
+    border: none;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.btn-search:hover,
+.btn-tomorrow:hover {
+    filter: brightness(1.1);
+}

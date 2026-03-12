@@ -30,26 +30,10 @@
     </nav>
 
     <div class="container">
-        <!-- Active Profile Header -->
-        {% if current_profile %}
-        <div class="profile-header-widget" style="margin-bottom: 2rem;">
-            <span class="profile-avatar-small">{{ current_profile.avatar }}</span>
-            <div class="profile-info-col">
-                <span class="profile-name-small">{{ current_profile.name }} <span class="profile-level">Ур. {{
-                        current_profile.level }}</span></span>
-                <div class="xp-bar-container" title="Очков опыта: {{ current_profile.xp }}">
-                    {% set xp_percent = (current_profile.xp % 100) %}
-                    <div class="xp-bar-fill" style="width: {{ xp_percent }}%;"></div>
-                    <div class="xp-bar-text">{{ xp_percent }} / 100 XP</div>
-                </div>
-            </div>
-            <div style="flex-grow: 1;"></div>
-            <a href="/style-muse/logout_profile" class="profile-link-btn danger">Сменить профиль</a>
-        </div>
-        {% endif %}
+        <!-- Profile Header Removed -->
 
         <header class="header">
-            <h1>{% if current_profile %}Гардероб {{ current_profile.name }}{% else %}Мой гардероб{% endif %}</h1>
+            <h1>Мой гардероб</h1>
             <p>Твоя коллекция стильных вещей ✨</p>
         </header>
 

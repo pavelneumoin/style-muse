@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ Панель - Style Muse</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            background: #f4f4f9;
+            color: #333;
+        }
+
+        h1 {
+            color: #5a67d8;
+        }
+
+        .nav-links {
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            margin-right: 15px;
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #2b6cb0;
+            text-decoration: underline;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #edf2f7;
+            color: #2d3748;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+
+        .img-preview {
+            max-width: 150px;
+            border-radius: 8px;
+        }
+
+        .json-data {
+            font-family: monospace;
+            font-size: 12px;
+            color: #718096;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Панель аналитики Style Muse 📊</h1>
+    <div class="nav-links">
+        <a href="/style-muse/">🏠 На главную</a>
+        <a href="/style-muse/wardrobe">👗 Управление вещами</a>
+        <a href="/style-muse/admin/logout">🚪 Выйти</a>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Время</th>
+            <th>Город</th>
+            <th>Темп.</th>
+            <th>AI Совет</th>
+            <th>Картинка (YandexArt)</th>
+            <th>Наряды (JSON)</th>
+        </tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.id }}</td>
+            <td>{{ log.created_at }}</td>
+            <td>{{ log.city }}</td>
+            <td>{{ log.temperature }}°C</td>
+            <td>{{ log.ai_advice }}</td>
+            <td>
+                {% if log.ai_image_url %}
+                <img src="{{ log.ai_image_url }}" alt="Сгенерировано" class="img-preview">
+                {% else %}
+                <span style="color: #a0aec0;">Нет картинки</span>
+                {% endif %}
+            </td>
+            <td>
+                <div class="json-data">
+                    <b>👩:</b> {{ log.female_outfit }}<br><br>
+                    <b>👦:</b> {{ log.male_outfit }}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

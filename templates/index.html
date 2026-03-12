@@ -18,24 +18,7 @@
         <div class="cloud cloud-3"></div>
     </div>
 
-    <!-- Active Profile Header -->
-    {% if current_profile %}
-    <div class="profile-header-widget">
-        <span class="profile-avatar-small">{{ current_profile.avatar }}</span>
-        <div class="profile-info-col">
-            <span class="profile-name-small">{{ current_profile.name }} <span class="profile-level">Ур. {{
-                    current_profile.level }}</span></span>
-            <div class="xp-bar-container" title="Очков опыта: {{ current_profile.xp }}">
-                {% set xp_percent = (current_profile.xp % 100) %}
-                <div class="xp-bar-fill" style="width: {{ xp_percent }}%;"></div>
-                <div class="xp-bar-text">{{ xp_percent }} / 100 XP</div>
-            </div>
-        </div>
-        <div style="flex-grow: 1;"></div>
-        <a href="/style-muse/wardrobe" class="profile-link-btn primary">👗 Шкаф</a>
-        <a href="/style-muse/logout_profile" class="profile-link-btn danger">Сменить</a>
-    </div>
-    {% endif %}
+    <!-- Profile Header Removed -->
 
     <!-- Маскот Пушок -->
     <div class="mascot-section">
@@ -110,19 +93,14 @@
 
     <!-- Search -->
     <div class="search-section">
-        <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-            <form method="POST" class="search-form"
-                style="flex-grow: 1; margin: 0; max-width: 600px; display: flex; flex-wrap: wrap; gap: 0; background: var(--white); border: 3px solid var(--purple); border-radius: 50px; overflow: hidden; padding: 0;">
-                <input type="text" name="city" placeholder="🔍 Введи город..." value="{{ city }}"
-                    style="flex-grow: 1; min-width: 200px; border: none; outline: none; padding: 12px 20px; font-size: 15px; background: transparent;">
-                <button type="submit" name="action" value="today"
-                    style="min-width: 100px; background: linear-gradient(135deg, var(--purple), var(--pink)); color: white; border: none; padding: 12px 24px; font-weight: 700; cursor: pointer; border-radius: 0; transition: background 0.3s; margin:0;">Найти</button>
+        <div class="search-form-container">
+            <form method="POST" class="search-form main-search">
+                <input type="text" name="city" placeholder="🔍 Введи город..." value="{{ city }}" class="search-input">
+                <button type="submit" name="action" value="today" class="btn-search">Найти</button>
             </form>
-            <form method="POST" style="margin: 0; display:flex;">
+            <form method="POST" class="search-form tomorrow-search">
                 <input type="hidden" name="city" value="{{ city }}">
-                <button type="submit" name="action" value="tomorrow" class="btn-tomorrow"
-                    style="background: linear-gradient(135deg, var(--teal), #2dd4bf); color: white; border: none; font-weight: 700; padding: 12px 24px; border-radius: 50px; cursor: pointer; white-space: nowrap; transition: background 0.3s; height: 100%; box-sizing: border-box;">А
-                    что завтра?</button>
+                <button type="submit" name="action" value="tomorrow" class="btn-tomorrow">А что завтра?</button>
             </form>
         </div>
     </div>
@@ -131,10 +109,10 @@
     <!-- Avatars Section -->
     <div class="avatars-section">
         <h2>👗 Ваши образы на сегодня</h2>
-
         <div class="avatars-grid">
+
             <!-- Female Avatar -->
-            <div class="avatar-card">
+            <div class="avatar-card" id="female-avatar-card">
                 <h3>👩 Девочка</h3>
                 <div class="avatar-wrapper">
                     <svg viewBox="0 0 200 320" class="avatar-svg" id="female-avatar">
@@ -152,82 +130,22 @@
                         <rect x="78" y="230" width="18" height="55" fill="#fad7c4" rx="5" />
                         <rect x="104" y="230" width="18" height="55" fill="#fad7c4" rx="5" />
 
-                        <!-- Clothes - clickable -->
-                        {% if weather_data.temperature < 10 %} <!-- Winter: Coat -->
-                            <path class="clothing-item" data-item="coat" data-gender="female"
-                                d="M50 115 Q35 160 40 230 L65 230 L65 235 L135 235 L135 230 L160 230 Q165 160 150 115 Q120 108 100 108 Q80 108 50 115"
-                                fill="{{ female_outfit.coat.color if female_outfit.coat else '#ff6b9d' }}" />
-                            <!-- Scarf -->
-                            <path class="clothing-item" data-item="scarf" data-gender="female"
-                                d="M75 100 Q100 115 125 100 L120 130 L80 130 Z"
-                                fill="{{ female_outfit.accessory.color if female_outfit.accessory else '#b19cd9' }}" />
-                            <!-- Hat -->
-                            <ellipse class="clothing-item" data-item="hat" data-gender="female" cx="100" cy="18" rx="40"
-                                ry="18" fill="#ff6b9d" />
-                            <circle cx="100" cy="2" r="8" fill="white" />
-                            <!-- Gloves -->
-                            <ellipse class="clothing-item" data-item="gloves" data-gender="female" cx="38" cy="180"
-                                rx="10" ry="14" fill="#ff6b9d" />
-                            <ellipse class="clothing-item" data-item="gloves" data-gender="female" cx="162" cy="180"
-                                rx="10" ry="14" fill="#ff6b9d" />
-                            {% elif weather_data.temperature < 20 %} <!-- Spring/Autumn: Jacket + pants -->
-                                <path class="clothing-item" data-item="top" data-gender="female"
-                                    d="M55 115 Q42 145 42 185 L62 185 L62 200 L138 200 L138 185 L158 185 Q158 145 145 115 Q120 108 100 108 Q80 108 55 115"
-                                    fill="{{ female_outfit.top.color if female_outfit.top else '#b19cd9' }}" />
-                                <rect class="clothing-item" data-item="bottom" data-gender="female" x="68" y="200"
-                                    width="64" height="35" rx="3"
-                                    fill="{{ female_outfit.bottom.color if female_outfit.bottom else '#5b7bb3' }}" />
-                                {% else %}
-                                <!-- Summer: Dress -->
-                                <!-- Arms -->
-                                <rect x="45" y="120" width="14" height="50" fill="#fad7c4" rx="5" />
-                                <rect x="141" y="120" width="14" height="50" fill="#fad7c4" rx="5" />
-                                <ellipse cx="52" cy="172" rx="8" ry="10" fill="#fad7c4" />
-                                <ellipse cx="148" cy="172" rx="8" ry="10" fill="#fad7c4" />
-                                <path class="clothing-item" data-item="dress" data-gender="female"
-                                    d="M60 115 Q50 160 55 230 L145 230 Q150 160 140 115 Q120 108 100 108 Q80 108 60 115"
-                                    fill="{{ female_outfit.dress.color if female_outfit.dress else '#ff6b9d' }}" />
-                                <!-- Sunglasses -->
-                                <rect class="clothing-item" data-item="sunglasses" data-gender="female" x="72" y="50"
-                                    width="22" height="14" rx="3" fill="#333" opacity="0.9" />
-                                <rect class="clothing-item" data-item="sunglasses" data-gender="female" x="106" y="50"
-                                    width="22" height="14" rx="3" fill="#333" opacity="0.9" />
-                                <line x1="94" y1="57" x2="106" y2="57" stroke="#333" stroke-width="2" />
-                                {% endif %}
+                        <!-- Base Clothes -->
+                        <path class="clothing-item" data-item="dress" data-gender="female"
+                            d="M60 115 Q50 160 55 230 L145 230 Q150 160 140 115 Q120 108 100 108 Q80 108 60 115"
+                            fill="{{ female_outfit.dress.color if female_outfit.dress else '#ff6b9d' }}" />
 
-                                <!-- Shoes - always visible -->
-                                {% if weather_data.temperature
-                                < 10 %} <rect class="clothing-item" data-item="shoes" data-gender="female" x="72"
-                                    y="280" width="26" height="18" rx="5" fill="#5c4033" />
-                                <rect class="clothing-item" data-item="shoes" data-gender="female" x="102" y="280"
-                                    width="26" height="18" rx="5" fill="#5c4033" />
-                                {% elif weather_data.temperature
-                                < 20 %} <ellipse class="clothing-item" data-item="shoes" data-gender="female" cx="87"
-                                    cy="288" rx="15" ry="7" fill="#333" />
-                                <ellipse class="clothing-item" data-item="shoes" data-gender="female" cx="113" cy="288"
-                                    rx="15" ry="7" fill="#333" />
-                                {% else %}
-                                <ellipse class="clothing-item" data-item="shoes" data-gender="female" cx="87" cy="288"
-                                    rx="14" ry="5" fill="#ffd700" />
-                                <ellipse class="clothing-item" data-item="shoes" data-gender="female" cx="113" cy="288"
-                                    rx="14" ry="5" fill="#ffd700" />
-                                {% endif %}
-
-                                <!-- Umbrella (rain) -->
-                                {% if 'дождь' in weather_data.description.lower() or 'ливень' in
-                                weather_data.description.lower() %}
-                                <g class="clothing-item umbrella-group" data-item="umbrella" data-gender="female">
-                                    <ellipse cx="165" cy="70" rx="35" ry="18" fill="#ff6b9d" />
-                                    <line x1="165" y1="70" x2="165" y2="140" stroke="#555" stroke-width="3" />
-                                    <path d="M158 140 Q165 148 172 140" stroke="#555" stroke-width="3" fill="none" />
-                                </g>
-                                {% endif %}
+                        <!-- Shoes -->
+                        <ellipse class="clothing-item" data-item="shoes" data-gender="female" cx="87" cy="288" rx="14"
+                            ry="5" fill="#ffd700" />
+                        <ellipse class="clothing-item" data-item="shoes" data-gender="female" cx="113" cy="288" rx="14"
+                            ry="5" fill="#ffd700" />
                     </svg>
                 </div>
             </div>
 
             <!-- Male Avatar -->
-            <div class="avatar-card">
+            <div class="avatar-card" id="male-avatar-card">
                 <h3>👦 Мальчик</h3>
                 <div class="avatar-wrapper">
                     <svg viewBox="0 0 200 320" class="avatar-svg" id="male-avatar">
@@ -245,84 +163,26 @@
                         <rect x="75" y="230" width="22" height="55" fill="#e8c4a8" rx="4" />
                         <rect x="103" y="230" width="22" height="55" fill="#e8c4a8" rx="4" />
 
-                        <!-- Clothes -->
-                        {% if weather_data.temperature < 10 %} <!-- Winter: Coat -->
-                            <path class="clothing-item" data-item="coat" data-gender="male"
-                                d="M45 110 Q28 160 35 235 L62 235 L62 240 L138 240 L138 235 L165 235 Q172 160 155 110 Q120 103 100 103 Q80 103 45 110"
-                                fill="{{ male_outfit.coat.color if male_outfit.coat else '#2c3e50' }}" />
-                            <line x1="100" y1="110" x2="100" y2="240" stroke="#1a252f" stroke-width="2" />
-                            <!-- Scarf -->
-                            <path class="clothing-item" data-item="scarf" data-gender="male"
-                                d="M70 100 Q100 115 130 100" stroke="#c0392b" stroke-width="12" fill="none" />
-                            <rect class="clothing-item" data-item="scarf" data-gender="male" x="125" y="105" width="14"
-                                height="45" rx="4" fill="#c0392b" />
-                            <!-- Hat -->
-                            <rect class="clothing-item" data-item="hat" data-gender="male" x="60" y="5" width="80"
-                                height="35" rx="5" fill="#2c3e50" />
-                            <rect x="55" y="38" width="90" height="10" rx="2" fill="#2c3e50" />
-                            <!-- Gloves -->
-                            <ellipse class="clothing-item" data-item="gloves" data-gender="male" cx="30" cy="190"
-                                rx="12" ry="15" fill="#2c3e50" />
-                            <ellipse class="clothing-item" data-item="gloves" data-gender="male" cx="170" cy="190"
-                                rx="12" ry="15" fill="#2c3e50" />
-                            {% elif weather_data.temperature < 20 %} <!-- Spring: Jacket + pants -->
-                                <path class="clothing-item" data-item="top" data-gender="male"
-                                    d="M52 110 Q38 145 40 190 L62 190 L62 205 L138 205 L138 190 L160 190 Q162 145 148 110 Q120 103 100 103 Q80 103 52 110"
-                                    fill="{{ male_outfit.top.color if male_outfit.top else '#6b8e9f' }}" />
-                                <rect class="clothing-item" data-item="bottom" data-gender="male" x="68" y="205"
-                                    width="64" height="30"
-                                    fill="{{ male_outfit.bottom.color if male_outfit.bottom else '#2c3e50' }}" />
-                                {% else %}
-                                <!-- Summer: T-shirt + shorts -->
-                                <!-- Arms -->
-                                <rect x="43" y="115" width="16" height="55" fill="#e8c4a8" rx="5" />
-                                <rect x="141" y="115" width="16" height="55" fill="#e8c4a8" rx="5" />
-                                <ellipse cx="51" cy="172" rx="9" ry="11" fill="#e8c4a8" />
-                                <ellipse cx="149" cy="172" rx="9" ry="11" fill="#e8c4a8" />
-                                <path class="clothing-item" data-item="top" data-gender="male"
-                                    d="M55 110 Q45 130 48 165 L65 165 L65 185 L135 185 L135 165 L152 165 Q155 130 145 110 Q120 103 100 103 Q80 103 55 110"
-                                    fill="{{ male_outfit.top.color if male_outfit.top else '#4a90d9' }}" />
-                                <rect class="clothing-item" data-item="bottom" data-gender="male" x="70" y="185"
-                                    width="60" height="45" rx="3"
-                                    fill="{{ male_outfit.bottom.color if male_outfit.bottom else '#d4a574' }}" />
-                                <!-- Sunglasses -->
-                                <rect class="clothing-item" data-item="sunglasses" data-gender="male" x="68" y="45"
-                                    width="24" height="14" rx="2" fill="#222" opacity="0.9" />
-                                <rect class="clothing-item" data-item="sunglasses" data-gender="male" x="108" y="45"
-                                    width="24" height="14" rx="2" fill="#222" opacity="0.9" />
-                                <line x1="92" y1="52" x2="108" y2="52" stroke="#222" stroke-width="2" />
-                                {% endif %}
+                        <!-- Base Clothes -->
+                        <path class="clothing-item" data-item="top" data-gender="male"
+                            d="M55 110 Q45 130 48 165 L65 165 L65 185 L135 185 L135 165 L152 165 Q155 130 145 110 Q120 103 100 103 Q80 103 55 110"
+                            fill="{{ male_outfit.top.color if male_outfit.top else '#4a90d9' }}" />
+                        <rect class="clothing-item" data-item="bottom" data-gender="male" x="70" y="185" width="60"
+                            height="45" rx="3"
+                            fill="{{ male_outfit.bottom.color if male_outfit.bottom else '#d4a574' }}" />
 
-                                <!-- Shoes -->
-                                {% if weather_data.temperature
-                                < 10 %} <rect class="clothing-item" data-item="shoes" data-gender="male" x="70" y="278"
-                                    width="28" height="22" rx="5" fill="#1a0f05" />
-                                <rect class="clothing-item" data-item="shoes" data-gender="male" x="102" y="278"
-                                    width="28" height="22" rx="5" fill="#1a0f05" />
-                                {% elif weather_data.temperature
-                                < 20 %} <ellipse class="clothing-item" data-item="shoes" data-gender="male" cx="86"
-                                    cy="288" rx="16" ry="8" fill="#5c4033" />
-                                <ellipse class="clothing-item" data-item="shoes" data-gender="male" cx="114" cy="288"
-                                    rx="16" ry="8" fill="#5c4033" />
-                                {% else %}
-                                <rect class="clothing-item" data-item="shoes" data-gender="male" x="72" y="283"
-                                    width="24" height="8" rx="2" fill="#333" />
-                                <rect class="clothing-item" data-item="shoes" data-gender="male" x="104" y="283"
-                                    width="24" height="8" rx="2" fill="#333" />
-                                {% endif %}
-
-                                <!-- Umbrella (rain) -->
-                                {% if 'дождь' in weather_data.description.lower() %}
-                                <g class="clothing-item umbrella-group" data-item="umbrella" data-gender="male">
-                                    <ellipse cx="170" cy="65" rx="32" ry="16" fill="#2c3e50" />
-                                    <line x1="170" y1="65" x2="170" y2="130" stroke="#444" stroke-width="3" />
-                                </g>
-                                {% endif %}
+                        <!-- Shoes -->
+                        <rect class="clothing-item" data-item="shoes" data-gender="male" x="72" y="283" width="24"
+                            height="8" rx="2" fill="#333" />
+                        <rect class="clothing-item" data-item="shoes" data-gender="male" x="104" y="283" width="24"
+                            height="8" rx="2" fill="#333" />
                     </svg>
                 </div>
             </div>
+
         </div>
     </div>
+    {% endif %}
 
     <!-- AI Кнопки для вопросов -->
     <div class="ai-buttons-section">
@@ -374,25 +234,6 @@
             style="max-width: 100%; max-height: 400px; border-radius: 16px; margin-top: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
     </div>
     {% endif %}
-
-    {% endif %}
-    </div>
-
-    <!-- Color Modal -->
-    <div class="modal-overlay" id="color-modal-overlay"></div>
-    <div class="modal" id="color-modal">
-        <h3>🎨 Выбери цвет</h3>
-        <p id="color-modal-hint">Выбранный элемент: <strong id="selected-element-name">-</strong></p>
-        <div class="color-grid">
-            {% for color in colors %}
-            <div class="color-btn" data-color="{{ color.hex }}" style="background:{{ color.hex }};"
-                title="{{ color.name }}">
-                <span class="color-label">{{ color.name }}</span>
-            </div>
-            {% endfor %}
-        </div>
-        <button class="btn-close" id="close-colors">Закрыть</button>
-    </div>
 
     <!-- AI Info Modal -->
     <div class="modal-overlay" id="ai-modal-overlay"></div>
