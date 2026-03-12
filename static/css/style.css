@@ -46,7 +46,8 @@ body {
 .weather-bar {
     background: var(--white);
     border-bottom: 1px solid var(--gray-200);
-    padding: 16px 24px;
+    padding: 8px 16px;
+    /* COMPACT INFO */
     position: sticky;
     top: 0;
     z-index: 100;
@@ -59,7 +60,8 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 12px;
+    /* COMPACT */
 }
 
 .weather-main {
@@ -141,13 +143,15 @@ body {
 .main-container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 32px 24px;
+    padding: 16px 16px;
+    /* COMPACT */
 }
 
 /* Search */
 .search-section {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
+    /* COMPACT */
 }
 
 .search-form {
@@ -185,38 +189,42 @@ body {
 
 /* Avatars Section */
 .avatars-section {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
+    /* COMPACT */
 }
 
 .avatars-section h2 {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .hint {
     color: var(--gray-500);
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .avatars-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 16px;
+    /* COMPACT */
 }
 
 .avatar-card {
     background: var(--white);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 16px;
+    /* COMPACT */
     box-shadow: var(--shadow);
     text-align: center;
 }
 
 .avatar-card h3 {
     font-size: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    /* COMPACT */
     color: var(--gray-700);
 }
 
@@ -225,11 +233,13 @@ body {
     justify-content: center;
     background: linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%);
     border-radius: 12px;
-    padding: 20px;
+    padding: 10px;
+    /* COMPACT */
 }
 
 .avatar-svg {
-    height: 280px;
+    height: 240px;
+    /* COMPACT FOR KIDS */
     width: auto;
 }
 
@@ -591,43 +601,51 @@ body {
     animation: blink 4s infinite;
 }
 
-/* ========== AI РљРЅРѕРїРєРё ========== */
+/* ========== AI Кнопки ========== */
 .ai-buttons-section {
     background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
     border-radius: var(--radius);
-    padding: 28px;
-    margin: 24px 0;
+    padding: 20px;
+    /* COMPACT */
+    margin: 16px 0;
+    /* COMPACT */
     box-shadow: var(--shadow-lg);
 }
 
 .ai-buttons-title {
     color: var(--white);
-    font-size: 22px;
+    font-size: 20px;
+    /* COMPACT */
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    /* COMPACT */
     text-align: center;
 }
 
 .ai-buttons-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 12px;
+    /* COMPACT */
 }
 
 .ai-question-btn {
     background: var(--white);
     border: none;
     border-radius: 16px;
-    padding: 18px 16px;
+    padding: 12px 12px;
+    /* COMPACT */
     font-family: 'Nunito', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
+    /* COMPACT */
     font-weight: 700;
     color: var(--gray-800);
     cursor: pointer;
     transition: all 0.3s;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    /* COMPACT */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
