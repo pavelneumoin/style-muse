@@ -1,4 +1,4 @@
-/* Детский Погодник - Яркий детский стиль */
+﻿/* Р”РµС‚СЃРєРёР№ РџРѕРіРѕРґРЅРёРє - РЇСЂРєРёР№ РґРµС‚СЃРєРёР№ СЃС‚РёР»СЊ */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
 * {
@@ -474,46 +474,52 @@ body {
     }
 }
 
-/* ========== Маскот Пушок ========== */
+/* ========== РњР°СЃРєРѕС‚ РџСѓС€РѕРє ========== */
 .mascot-section {
-    text-align: center;
-    padding: 20px;
-    position: relative;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 900;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
 }
 
 .mascot-container {
     display: inline-block;
     animation: float 3s ease-in-out infinite;
+    cursor: pointer;
 }
 
 .mascot-svg {
-    width: 120px;
-    height: 100px;
+    width: 90px;
+    height: 75px;
     filter: drop-shadow(0 8px 20px rgba(147, 197, 253, 0.5));
 }
 
 .mascot-speech {
     background: var(--white);
     border-radius: 20px;
-    padding: 16px 24px;
-    margin-top: 12px;
+    padding: 12px 18px;
+    margin-bottom: 12px;
     box-shadow: var(--shadow);
     position: relative;
-    display: inline-block;
-    font-size: 18px;
+    max-width: 220px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--purple);
+    text-align: center;
+    line-height: 1.4;
 }
 
 .mascot-speech::before {
     content: '';
     position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 12px solid var(--white);
+    bottom: -10px;
+    right: 35px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--white);
 }
 
 @keyframes float {
@@ -577,7 +583,7 @@ body {
     animation: blink 4s infinite;
 }
 
-/* ========== AI Кнопки ========== */
+/* ========== AI РљРЅРѕРїРєРё ========== */
 .ai-buttons-section {
     background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
     border-radius: var(--radius);
@@ -646,7 +652,7 @@ body {
     background: linear-gradient(135deg, #d1fae5, #a7f3d0);
 }
 
-/* ========== Плавающие облака (фон) ========== */
+/* ========== РџР»Р°РІР°СЋС‰РёРµ РѕР±Р»Р°РєР° (С„РѕРЅ) ========== */
 .floating-clouds {
     position: fixed;
     top: 0;
@@ -709,7 +715,7 @@ body {
     }
 }
 
-/* ========== Обновленные карточки ========== */
+/* ========== РћР±РЅРѕРІР»РµРЅРЅС‹Рµ РєР°СЂС‚РѕС‡РєРё ========== */
 .info-card {
     background: var(--white);
     border-radius: var(--radius);
@@ -734,7 +740,7 @@ body {
     border-color: #fcd34d;
 }
 
-/* Weather bar детский стиль */
+/* Weather bar РґРµС‚СЃРєРёР№ СЃС‚РёР»СЊ */
 .weather-bar {
     background: linear-gradient(135deg, var(--white) 0%, #f0f9ff 100%);
     border-bottom: 3px solid var(--cyan);
@@ -752,7 +758,7 @@ body {
     border-color: var(--blue);
 }
 
-/* Search детский стиль */
+/* Search РґРµС‚СЃРєРёР№ СЃС‚РёР»СЊ */
 .search-form {
     background: var(--white);
     border: 3px solid var(--purple);
@@ -768,7 +774,7 @@ body {
     background: linear-gradient(135deg, var(--pink), var(--orange));
 }
 
-/* Avatars детский стиль */
+/* Avatars РґРµС‚СЃРєРёР№ СЃС‚РёР»СЊ */
 .avatar-card {
     border: 3px solid var(--pink);
     border-radius: var(--radius);
@@ -785,7 +791,7 @@ body {
     color: var(--purple);
 }
 
-/* Кнопка цветов детский стиль */
+/* РљРЅРѕРїРєР° С†РІРµС‚РѕРІ РґРµС‚СЃРєРёР№ СЃС‚РёР»СЊ */
 .btn-colors {
     background: linear-gradient(135deg, var(--yellow), var(--orange));
     color: var(--gray-800);
@@ -798,7 +804,7 @@ body {
     transform: translateY(-3px) scale(1.02);
 }
 
-/* Modal детский стиль */
+/* Modal РґРµС‚СЃРєРёР№ СЃС‚РёР»СЊ */
 .modal {
     border: 4px solid var(--purple);
     border-radius: 30px;
@@ -820,7 +826,7 @@ body {
     background: linear-gradient(135deg, #16a34a, #15803d);
 }
 
-/* Responsive для AI кнопок */
+/* Responsive РґР»СЏ AI РєРЅРѕРїРѕРє */
 @media (max-width: 768px) {
     .ai-buttons-grid {
         grid-template-columns: 1fr;
@@ -893,75 +899,74 @@ body {
 .profile-link-btn.danger:hover {
     background: #fee2e2;
     border-color: #fecaca;
-}/ *   = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
-       S e a r c h   B a r   R e f a c t o r e d   S t y l e s  
-       = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   * /  
- . s e a r c h - f o r m - c o n t a i n e r   {  
-         d i s p l a y :   f l e x ;  
-         g a p :   1 0 p x ;  
-         a l i g n - i t e m s :   c e n t e r ;  
-         j u s t i f y - c o n t e n t :   c e n t e r ;  
-         w i d t h :   1 0 0 % ;  
- }  
-  
- . s e a r c h - f o r m . m a i n - s e a r c h   {  
-         f l e x - g r o w :   1 ;  
-         m a r g i n :   0 ;  
-         m a x - w i d t h :   6 0 0 p x ;  
-         d i s p l a y :   f l e x ;  
-         f l e x - w r a p :   w r a p ;  
-         g a p :   0 ;  
-         b a c k g r o u n d :   v a r ( - - w h i t e ) ;  
-         b o r d e r :   3 p x   s o l i d   v a r ( - - p u r p l e ) ;  
-         b o r d e r - r a d i u s :   5 0 p x ;  
-         o v e r f l o w :   h i d d e n ;  
-         p a d d i n g :   0 ;  
- }  
-  
- . s e a r c h - i n p u t   {  
-         f l e x - g r o w :   1 ;  
-         m i n - w i d t h :   2 0 0 p x ;  
-         b o r d e r :   n o n e ;  
-         o u t l i n e :   n o n e ;  
-         p a d d i n g :   1 2 p x   2 0 p x ;  
-         f o n t - s i z e :   1 5 p x ;  
-         b a c k g r o u n d :   t r a n s p a r e n t ;  
- }  
-  
- . b t n - s e a r c h   {  
-         m i n - w i d t h :   1 0 0 p x ;  
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   v a r ( - - p u r p l e ) ,   v a r ( - - p i n k ) ) ;  
-         c o l o r :   w h i t e ;  
-         b o r d e r :   n o n e ;  
-         p a d d i n g :   1 2 p x   2 4 p x ;  
-         f o n t - w e i g h t :   7 0 0 ;  
-         c u r s o r :   p o i n t e r ;  
-         b o r d e r - r a d i u s :   0 ;  
-         t r a n s i t i o n :   b a c k g r o u n d   0 . 3 s ;  
-         m a r g i n :   0 ;  
- }  
-  
- . s e a r c h - f o r m . t o m o r r o w - s e a r c h   {  
-         m a r g i n :   0 ;  
-         d i s p l a y :   f l e x ;  
- }  
-  
- . b t n - t o m o r r o w   {  
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   v a r ( - - t e a l ) ,   # 2 d d 4 b f ) ;  
-         c o l o r :   w h i t e ;  
-         b o r d e r :   n o n e ;  
-         f o n t - w e i g h t :   7 0 0 ;  
-         p a d d i n g :   1 2 p x   2 4 p x ;  
-         b o r d e r - r a d i u s :   5 0 p x ;  
-         c u r s o r :   p o i n t e r ;  
-         w h i t e - s p a c e :   n o w r a p ;  
-         t r a n s i t i o n :   b a c k g r o u n d   0 . 3 s ;  
-         h e i g h t :   1 0 0 % ;  
-         b o x - s i z i n g :   b o r d e r - b o x ;  
- }  
-  
- . b t n - s e a r c h : h o v e r ,  
- . b t n - t o m o r r o w : h o v e r   {  
-         f i l t e r :   b r i g h t n e s s ( 1 . 1 ) ;  
- }  
- 
+/* ================================
+   Search Bar Refactored Styles
+   ================================ */
+.search-form-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.search-form.main-search {
+    flex-grow: 1;
+    margin: 0;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    background: var(--white);
+    border: 3px solid var(--purple);
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.search-input {
+    flex-grow: 1;
+    min-width: 200px;
+    border: none;
+    outline: none;
+    padding: 12px 20px;
+    font-size: 15px;
+    background: transparent;
+}
+
+.btn-search {
+    min-width: 100px;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.3s;
+    margin: 0;
+}
+
+.search-form.tomorrow-search {
+    margin: 0;
+    display: flex;
+}
+
+.btn-tomorrow {
+    background: linear-gradient(135deg, var(--teal), #2dd4bf);
+    color: white;
+    border: none;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.btn-search:hover,
+.btn-tomorrow:hover {
+    filter: brightness(1.1);
+}
