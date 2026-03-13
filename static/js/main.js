@@ -270,17 +270,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (mascot) mascot.classList.add('mascot-thinking');
 
             try {
-                const response = await fetch('/api/explain_term', {
+                const category = el.classList.contains('fact') ? 'fact' : 'explain';
+                const response = await fetch('/style-muse/api/ask_ai', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ term: topic })
+                    body: JSON.stringify({ topic: topic, category: category })
                 });
 
                 const data = await response.json();
 
-                if (data.explanation) {
-                    showAiModal('🎓 Интересно!', data.explanation);
-                    playTTS(data.explanation);
+                if (data.answer) {
+                    showAiModal('🎓 Интересно!', data.answer);
+                    playTTS(data.answer);
                 } else {
                     showAiModal('😅 Упс', 'Не удалось получить ответ. Попробуй ещё раз!');
                 }
