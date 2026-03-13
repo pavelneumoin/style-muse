@@ -389,17 +389,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (mascot) mascot.classList.add('mascot-thinking');
 
             try {
-                const response = await fetch('/api/explain_term', {
+                const response = await fetch('/style-muse/api/ask_ai', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ term: topic })
+                    body: JSON.stringify({ topic: topic, category: 'explain' })
                 });
 
                 const data = await response.json();
 
-                if (data.explanation) {
-                    showAiModal('🎓 Пушок говорит:', data.explanation);
-                    playTTS(data.explanation);
+                if (data.answer) {
+                    showAiModal('🎓 Пушок говорит:', data.answer);
+                    playTTS(data.answer);
                     if (mascotSpeech) {
                         mascotSpeech.textContent = 'Вот что я узнал! 🎉';
                     }
@@ -529,16 +529,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const mascotPrompt = "Очень коротко ответь на вопрос ребенка (1-2 предложения, просто и весело): " + questionText;
 
-        fetch('/api/explain_term', {
+        fetch('/style-muse/api/ask_ai', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ term: mascotPrompt })
+            body: JSON.stringify({ topic: mascotPrompt, category: 'explain' })
         })
             .then(r => r.json())
             .then(data => {
-                if (data.explanation) {
-                    showAiModal('🎓 Пушок говорит:', data.explanation);
-                    playTTS(data.explanation);
+                if (data.answer) {
+                    showAiModal('🎓 Пушок говорит:', data.answer);
+                    playTTS(data.answer);
                     if (mascotSpeech) {
                         mascotSpeech.textContent = 'Вот что я узнал! 🎉';
                     }
